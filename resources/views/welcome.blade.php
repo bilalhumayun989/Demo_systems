@@ -21,25 +21,9 @@
         </div>
 
         <div class="shell hero-stage" aria-label="Business software dashboard preview">
-            <div class="hero-stage-label">
-                <span>One connected view</span>
-                <small>Sales &middot; People &middot; Inventory &middot; Finance</small>
-            </div>
             <div class="hero-visual">
-                <div class="dashboard-card">
-                    <div class="dashboard-top"><span class="mini-brand"><i></i> BroshTech</span><span class="dashboard-dots">•••</span></div>
-                    <div class="dashboard-body">
-                        <aside class="dashboard-side"><span class="active"></span><span></span><span></span><span></span><span></span></aside>
-                        <div class="dashboard-main">
-                            <div class="dash-title"><span></span><small></small></div>
-                            <div class="metric-row">
-                                <div><i class="violet"></i><b>24.8K</b><small>Revenue</small></div>
-                                <div><i class="orange"></i><b>1,284</b><small>Orders</small></div>
-                                <div><i class="green"></i><b>94.2%</b><small>Complete</small></div>
-                            </div>
-                            <div class="chart-card"><span>Business overview</span><div class="chart-bars"><i style="height:30%"></i><i style="height:48%"></i><i style="height:40%"></i><i style="height:72%"></i><i style="height:58%"></i><i style="height:84%"></i><i style="height:68%"></i><i style="height:96%"></i></div></div>
-                        </div>
-                    </div>
+                <div class="dashboard-image-card">
+                    <img src="{{ asset('images/software_dashboard.jpeg') }}" alt="BroshTech software dashboard" loading="eager">
                 </div>
             </div>
         </div>

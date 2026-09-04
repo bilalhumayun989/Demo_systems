@@ -19,6 +19,7 @@ class SoftwareCatalogTest extends TestCase
             ->assertSee('DOMS')
             ->assertSee('RMS')
             ->assertSee('Paddle')
+                ->assertSee('images/software_dashboard.jpeg', false)
             ->assertSee(route('software.contact'), false);
     }
 
@@ -28,6 +29,7 @@ class SoftwareCatalogTest extends TestCase
         $this->get("/software/{$slug}")
             ->assertViewIs('software.show')
             ->assertSee($name)
+            ->assertSee('images/software_dashboard.jpeg', false)
             ->assertSee('Buy now');
     }
 

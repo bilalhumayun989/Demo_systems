@@ -26,7 +26,9 @@
                 <div class="product-showcase">
                     <div class="showcase-window">
                         <div class="showcase-bar"><i></i><i></i><i></i><span>{{ strtolower(str_replace(' ', '-', $product['name'])) }}.app</span></div>
-                        <div class="showcase-body"><aside><b></b><i></i><i></i><i></i><i></i><i></i></aside><div class="showcase-content"><div class="showcase-heading"><span></span><small></small></div><div class="showcase-stats"><i></i><i></i><i></i></div><div class="showcase-chart"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div><div class="showcase-table"><i></i><i></i><i></i></div></div></div>
+                        <div class="showcase-image-wrap">
+                            <img src="{{ asset('images/software_dashboard.jpeg') }}" alt="{{ $product['name'] }} software dashboard" loading="eager">
+                        </div>
                     </div>
                     <div class="showcase-badge"><span>✓</span><strong>All in one place</strong><small>Simple. Connected. Reliable.</small></div>
                 </div>

@@ -17,7 +17,7 @@
         <div class="shell nav-wrap">
             <a class="brand" href="{{ route('software.index') }}" aria-label="BroshTech software home">
                 <span class="brand-mark" aria-hidden="true">
-                    <svg viewBox="0 0 32 32"><path d="M8.5 9.5 16 5l7.5 4.5v4L16 18l-7.5-4.5v-4Z"/><path d="M8.5 18.5 16 23l7.5-4.5M8.5 14v8.5L16 27l7.5-4.5V14"/></svg>
+                    <img src="{{ asset('images/brosh_tech_logo.png') }}" alt="">
                 </span>
                 <span>Brosh<span>Tech</span></span>
             </a>
