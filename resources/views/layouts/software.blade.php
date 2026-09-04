@@ -71,9 +71,15 @@
                         <div class="footer-nav-column">
                             <h3>Quick links</h3>
                             <div class="footer-socials">
-                                <a href="https://www.facebook.com/p/BroshTech-61569795868977/" target="_blank" rel="noopener noreferrer" aria-label="BroshTech on Facebook">f</a>
-                                <a href="https://pk.linkedin.com/company/broshtech" target="_blank" rel="noopener noreferrer" aria-label="BroshTech on LinkedIn">in</a>
-                                <a href="https://www.instagram.com/broshtech/" target="_blank" rel="noopener noreferrer" aria-label="BroshTech on Instagram">ig</a>
+                                <a href="https://www.facebook.com/p/BroshTech-61569795868977/" target="_blank" rel="noopener noreferrer" aria-label="BroshTech on Facebook">
+                                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M24 12.07C24 5.4 18.63 0 12 0S0 5.4 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.05V9.41c0-3.03 1.79-4.7 4.53-4.7 1.31 0 2.68.24 2.68.24v2.97h-1.51c-1.49 0-1.96.93-1.96 1.89v2.26h3.33l-.53 3.49h-2.8V24C19.61 23.1 24 18.1 24 12.07Z"/></svg>
+                                </a>
+                                <a href="https://pk.linkedin.com/company/broshtech" target="_blank" rel="noopener noreferrer" aria-label="BroshTech on LinkedIn">
+                                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V8.98h3.42v1.57h.05c.47-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.29ZM5.32 7.41a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12Zm1.78 13.04H3.54V8.98H7.1v11.47ZM22.23 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.46c.98 0 1.77-.77 1.77-1.73V1.73C24 .77 23.21 0 22.23 0Z"/></svg>
+                                </a>
+                                <a href="https://www.instagram.com/broshtech/" target="_blank" rel="noopener noreferrer" aria-label="BroshTech on Instagram">
+                                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 3.25.15 4.77 1.69 4.92 4.92.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.15 3.23-1.66 4.77-4.92 4.92-1.27.06-1.64.07-4.85.07s-3.58-.01-4.85-.07c-3.26-.15-4.77-1.7-4.92-4.92-.06-1.27-.07-1.65-.07-4.85s.01-3.58.07-4.85C2.38 3.92 3.9 2.38 7.15 2.23 8.42 2.17 8.8 2.16 12 2.16ZM12 0C8.74 0 8.33.01 7.05.07 2.7.27.27 2.69.07 7.05.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.2 4.36 2.63 6.78 6.98 6.98C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c4.35-.2 6.78-2.62 6.98-6.98.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95C23.73 2.69 21.3.27 16.95.07 15.67.01 15.26 0 12 0Zm0 5.84A6.16 6.16 0 1 0 12 18.16 6.16 6.16 0 0 0 12 5.84Zm0 10.16a4 4 0 1 1 0-8 4 4 0 0 1 0 8Zm6.41-11.84a1.44 1.44 0 1 0 0 2.88 1.44 1.44 0 0 0 0-2.88Z"/></svg>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -99,19 +105,14 @@
         </div>
 
         <div class="footer-art" aria-hidden="true">
-            <img src="https://www.broshtech.com/fotterfotter.webp" alt="" loading="lazy">
+            <img src="{{ asset('images/broshtech-footer.webp') }}" alt="" loading="lazy">
         </div>
     </footer>
 
     <script>
         (function () {
-            var header = document.getElementById('site-header');
             var toggle = document.querySelector('.nav-toggle');
             var nav = document.getElementById('site-nav');
-
-            window.addEventListener('scroll', function () {
-                header.classList.toggle('scrolled', window.scrollY > 16);
-            }, { passive: true });
 
             toggle.addEventListener('click', function () {
                 var isOpen = toggle.getAttribute('aria-expanded') === 'true';
@@ -124,6 +125,66 @@
                     toggle.setAttribute('aria-expanded', 'false');
                     nav.classList.remove('open');
                 });
+            });
+
+            var motionItems = document.querySelectorAll([
+                '.hero-kicker',
+                '.hero-copy h1',
+                '.hero-summary',
+                '.hero-stage',
+                '.section-heading',
+                '.product-card',
+                '.why-copy',
+                '.why-list > div',
+                '.cta-inner',
+                '.product-hero-copy',
+                '.product-showcase',
+                '.feature-intro',
+                '.feature-grid article',
+                '.product-cta .shell',
+                '.more-card',
+                '.contact-page-heading',
+                '.contact-page-card',
+                '.footer-project',
+                '.footer-nav-column',
+                '.footer-details',
+                '.footer-art'
+            ].join(','));
+
+            motionItems.forEach(function (item, index) {
+                item.classList.add('motion-item');
+                item.style.setProperty('--reveal-delay', String((index % 3) * 80) + 'ms');
+
+                if (item.classList.contains('hero-stage') || item.classList.contains('product-showcase')) {
+                    item.classList.add('motion-window');
+                } else if (item.matches('.hero-copy h1, .section-heading, .feature-intro, .contact-page-heading, .footer-art')) {
+                    item.classList.add('motion-mask');
+                } else if (item.matches('.product-card, .feature-grid article, .more-card, .contact-page-card')) {
+                    item.classList.add('motion-card');
+                } else {
+                    item.classList.add('motion-soft');
+                }
+            });
+
+            if (!('IntersectionObserver' in window) || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                motionItems.forEach(function (item) {
+                    item.classList.add('is-visible');
+                });
+
+                return;
+            }
+
+            var observer = new IntersectionObserver(function (entries) {
+                entries.forEach(function (entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.12, rootMargin: '0px 0px -35px' });
+
+            motionItems.forEach(function (item) {
+                observer.observe(item);
             });
         }());
     </script>
