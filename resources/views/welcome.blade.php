@@ -5,23 +5,27 @@
 
 @section('content')
     <section class="hero">
-        <div class="shell hero-grid">
+        <div class="shell hero-intro">
             <div class="hero-copy">
-                <div class="hero-kicker"><span></span> Business software, made practical</div>
-                <h1>Built to run the<br><em>way you work.</em></h1>
-                <p>Six focused management systems. One clear goal: less operational friction and more control over your business.</p>
-                <div class="hero-actions">
-                    <a class="button button-primary" href="#solutions">Explore our solutions <span>↓</span></a>
-                    <a class="text-link" href="{{ route('software.contact') }}">Talk to our team <span>→</span></a>
-                </div>
-                <div class="hero-proof">
-                    <div class="proof-avatars"><span>CK</span><span>VE</span><span>RMS</span></div>
-                    <p><strong>Made for your workflow</strong><br>Flexible, secure and ready to grow.</p>
-                </div>
+                <div class="hero-kicker"><span></span> BroshTech software suite</div>
+                <h1>Management software built for <em>real business.</em></h1>
             </div>
 
-            <div class="hero-visual" aria-label="Business software dashboard preview">
-                <div class="visual-glow"></div>
+            <div class="hero-summary">
+                <p>Six focused systems for retail, salons, couriers, distribution, restaurants and paddle clubs&mdash;built to make daily work simpler.</p>
+                <div class="hero-actions">
+                    <a class="button button-primary" href="#solutions">Explore software <span>&darr;</span></a>
+                    <a class="button button-ghost" href="{{ route('software.contact') }}">Talk to our team <span>&nearr;</span></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="shell hero-stage" aria-label="Business software dashboard preview">
+            <div class="hero-stage-label">
+                <span>One connected view</span>
+                <small>Sales &middot; People &middot; Inventory &middot; Finance</small>
+            </div>
+            <div class="hero-visual">
                 <div class="dashboard-card">
                     <div class="dashboard-top"><span class="mini-brand"><i></i> BroshTech</span><span class="dashboard-dots">•••</span></div>
                     <div class="dashboard-body">

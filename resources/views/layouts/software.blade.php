@@ -12,7 +12,7 @@
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/software-catalog.css') }}?v={{ filemtime(public_path('css/software-catalog.css')) }}">
 </head>
-<body class="@yield('body_class')">
+<body id="top" class="@yield('body_class')">
     <header class="site-header" id="site-header">
         <div class="shell nav-wrap">
             <a class="brand" href="{{ route('software.index') }}" aria-label="BroshTech software home">
@@ -39,54 +39,67 @@
     </main>
 
     <footer class="site-footer" id="contact">
-        <div class="shell">
-            <div class="footer-callout">
-                <div>
-                    <span>Let’s work together</span>
-                    <h2>Better operations start with the right tools.</h2>
-                </div>
-                <a class="footer-cta" href="{{ route('software.contact') }}">
-                    Talk to our team <span aria-hidden="true">→</span>
-                </a>
-            </div>
+        <div class="shell footer-shell">
+            <div class="footer-panel">
+                <div class="footer-main-grid">
+                    <div class="footer-project">
+                        <h2><span>Have a project?</span>Let&rsquo;s start.</h2>
+                        <div class="footer-rule"></div>
+                        <form class="footer-email" action="{{ route('software.contact') }}" method="get">
+                            <label class="sr-only" for="footer-email">Your email address</label>
+                            <input id="footer-email" name="email" type="email" placeholder="Enter your email...">
+                            <button type="submit" aria-label="Contact BroshTech"><span aria-hidden="true">&nearr;</span></button>
+                        </form>
+                    </div>
 
-            <div class="footer-grid">
-                <div class="footer-about">
-                <a class="brand brand-light" href="{{ route('software.index') }}">
-                    <span class="brand-mark" aria-hidden="true">
-                        <svg viewBox="0 0 32 32"><path d="M8.5 9.5 16 5l7.5 4.5v4L16 18l-7.5-4.5v-4Z"/><path d="M8.5 18.5 16 23l7.5-4.5M8.5 14v8.5L16 27l7.5-4.5V14"/></svg>
-                    </span>
-                    <span>Brosh<span>Tech</span></span>
-                </a>
-                    <p>Practical software built around how your business actually works.</p>
-                </div>
+                    <div class="footer-nav-grid">
+                        <div class="footer-nav-column">
+                            <h3>Explore</h3>
+                            <a href="{{ route('software.index') }}">Home</a>
+                            <a href="{{ route('software.index') }}#solutions">Software</a>
+                            <a href="{{ route('software.index') }}#why-us">Why us</a>
+                            <a href="{{ route('software.contact') }}">Contact us</a>
+                        </div>
 
-                <div class="footer-links">
-                    <span>Our solutions</span>
-                    <div class="footer-solution-links">
-                        @foreach(config('software.products') as $footerSlug => $footerProduct)
-                            <a href="{{ route('software.show', $footerSlug) }}">{{ $footerProduct['name'] }} <i aria-hidden="true">↗</i></a>
-                        @endforeach
+                        <div class="footer-nav-column footer-product-column">
+                            <h3>Products</h3>
+                            @foreach(config('software.products') as $footerSlug => $footerProduct)
+                                <a href="{{ route('software.show', $footerSlug) }}">{{ $footerProduct['name'] }}</a>
+                            @endforeach
+                        </div>
+
+                        <div class="footer-nav-column">
+                            <h3>Quick links</h3>
+                            <div class="footer-socials">
+                                <a href="https://www.facebook.com/p/BroshTech-61569795868977/" target="_blank" rel="noopener noreferrer" aria-label="BroshTech on Facebook">f</a>
+                                <a href="https://pk.linkedin.com/company/broshtech" target="_blank" rel="noopener noreferrer" aria-label="BroshTech on LinkedIn">in</a>
+                                <a href="https://www.instagram.com/broshtech/" target="_blank" rel="noopener noreferrer" aria-label="BroshTech on Instagram">ig</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <div class="footer-contact">
-                    <span class="footer-label">Contact sales</span>
-                    <a href="mailto:{{ config('software.sales_email') }}" target="_blank">
-                        <span class="footer-contact-icon" aria-hidden="true">@</span>
-                        <span><small>Email</small><strong>{{ config('software.sales_email') }}</strong></span>
-                    </a>
-                    <a href="https://wa.me/{{ preg_replace('/\D+/', '', config('software.sales_phone')) }}?text={{ urlencode('Hello BroshTech, I am interested in your software solutions.') }}" target="_blank" rel="noopener noreferrer">
-                        <span class="footer-contact-icon footer-whatsapp-icon" aria-hidden="true">WA</span>
-                        <span><small>WhatsApp</small><strong>{{ config('software.sales_phone') }}</strong></span>
-                    </a>
+                <div class="footer-details">
+                    <div>
+                        <h3>Give us a call</h3>
+                        <a href="https://wa.me/{{ preg_replace('/\D+/', '', config('software.sales_phone')) }}?text={{ urlencode('Hello BroshTech, I am interested in your software solutions.') }}" target="_blank" rel="noopener noreferrer">{{ config('software.sales_phone') }}</a>
+                        <a class="footer-mail-link" href="mailto:{{ config('software.sales_email') }}">{{ config('software.sales_email') }}</a>
+                    </div>
+                    <div class="footer-location">
+                        <h3>Our location</h3>
+                        <a href="https://www.google.com/maps/search/?api=1&amp;query=113+Mall+Faisalabad" target="_blank" rel="noopener noreferrer">113 Mall, Faisalabad</a>
+                    </div>
+                </div>
+
+                <div class="footer-bottom">
+                    <span>&copy; {{ date('Y') }} BroshTech. All rights reserved.</span>
+                    <a href="#top">Back To Top <span aria-hidden="true">&uarr;</span></a>
                 </div>
             </div>
+        </div>
 
-            <div class="footer-bottom">
-                <span>&copy; {{ date('Y') }} BroshTech. All rights reserved.</span>
-                <a href="{{ route('software.index') }}" aria-label="Back to homepage">Back to top <span aria-hidden="true">↑</span></a>
-            </div>
+        <div class="footer-art" aria-hidden="true">
+            <img src="https://www.broshtech.com/fotterfotter.webp" alt="" loading="lazy">
         </div>
     </footer>
 
