@@ -209,3 +209,52 @@ body{overflow-x:hidden}.product-hero-grid,.product-hero-copy,.product-showcase,.
 .brand-mark img{width:35px;height:35px;display:block;object-fit:contain;filter:grayscale(1) contrast(1.8);mix-blend-mode:multiply}
 .site-footer .brand-mark{background:#fff}
 .site-footer .brand-mark img{mix-blend-mode:normal}
+
+/* Footer proportions aligned with the reference BroshTech site. */
+.site-footer{padding:64px 16px 0;background:#000}
+.footer-shell{max-width:1280px;width:100%;padding:0 24px}
+.footer-panel{margin-top:-40px;padding:40px 24px 0;border-radius:40px 40px 0 0;background:#000;box-shadow:0 18px 45px rgba(0,0,0,.22)}
+.footer-main-grid{grid-template-columns:minmax(280px,1fr) minmax(0,2fr);gap:32px;min-height:270px}
+.footer-project h2{font-size:42px;line-height:1.15;letter-spacing:-.02em}
+.footer-rule{width:224px;margin:32px 0;height:2px}
+.footer-email{max-width:430px}
+.footer-email input{padding:0 52px 16px 0;font-size:18px}
+.footer-email button{right:0;bottom:8px;width:40px;height:36px;border-radius:5px}
+.footer-nav-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:40px}
+.footer-nav-column{gap:12px}
+.footer-nav-column h3,.footer-details h3{margin-bottom:12px;font-size:24px;letter-spacing:.08em}
+.footer-nav-column>a{font-size:20px}
+.footer-socials{gap:18px}
+.footer-socials a{width:32px;height:32px;border:0}
+.footer-socials svg{width:32px;height:32px}
+.footer-details{padding:14px 0 0;gap:40px}
+.footer-details h3{font-size:20px}
+.footer-details a{font-size:18px}
+.site-footer .footer-bottom{margin-top:56px;padding:0 0 30px;border-top:1px solid #23261d;font-size:12px}
+.footer-bottom a{margin-top:40px;font-size:24px;font-weight:300}
+.footer-bottom a span{width:32px;height:32px;margin-left:0}
+.footer-art{max-width:1200px;margin:0 auto}
+.footer-art img{opacity:.8}
+.footer-socials{align-items:center;gap:18px;color:#000}
+.footer-socials a{width:42px;height:42px;display:grid;place-items:center;border-radius:4px;color:#000;background:#a1a1a1}
+.footer-socials svg{width:28px;height:28px;display:block;fill:currentColor}
+.footer-socials a:hover{color:#000;background:#fff;transform:scale(1.08)}
+@media(max-width:760px){
+	.site-footer{padding:48px 16px 0}
+	.footer-shell{padding:0}
+	.footer-panel{margin-top:-24px;padding:32px 16px 0;border-radius:24px 24px 0 0}
+	.footer-main-grid{grid-template-columns:1fr;gap:56px;min-height:0}
+	.footer-project h2{font-size:36px}
+	.footer-rule{width:128px;margin:24px 0}
+	.footer-email input{font-size:16px}
+	.footer-socials{gap:14px}
+	.footer-nav-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:48px 24px}
+	.footer-nav-column:last-child{grid-column:1/-1}
+	.footer-nav-column h3,.footer-details h3{font-size:18px}
+	.footer-nav-column>a{font-size:16px}
+	.footer-details{padding-top:20px}
+	.footer-details h3{font-size:16px}
+	.footer-details a{font-size:16px}
+	.site-footer .footer-bottom{margin-top:42px;padding-bottom:20px}
+	.footer-bottom a{margin-top:28px;font-size:20px}
+}

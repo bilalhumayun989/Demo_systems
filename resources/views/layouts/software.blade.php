@@ -130,37 +130,35 @@
             var motionItems = document.querySelectorAll([
                 '.hero-kicker',
                 '.hero-copy h1',
-                '.hero-summary',
-                '.hero-stage',
-                '.section-heading',
-                '.product-card',
-                '.why-copy',
-                '.why-list > div',
-                '.cta-inner',
-                '.product-hero-copy',
-                '.product-showcase',
-                '.feature-intro',
-                '.feature-grid article',
-                '.product-cta .shell',
-                '.more-card',
-                '.contact-page-heading',
-                '.contact-page-card',
-                '.footer-project',
-                '.footer-nav-column',
-                '.footer-details',
-                '.footer-art'
+                '.hero-summary p',
+                '.section-heading .section-kicker',
+                '.section-heading h2',
+                '.section-heading > p',
+                '.why-copy .section-kicker',
+                '.why-copy h2',
+                '.why-copy > p',
+                '.feature-intro .section-kicker',
+                '.feature-intro h2',
+                '.feature-intro > p',
+                '.product-title-row > span',
+                '.product-hero-copy h1',
+                '.product-hero-copy h2',
+                '.product-hero-copy > p',
+                '.contact-page-heading .section-kicker',
+                '.contact-page-heading h1',
+                '.contact-page-heading > p',
+                '.cta-band .section-kicker',
+                '.cta-band h2',
+                '.product-cta > .shell > div:first-child > span',
+                '.product-cta h2'
             ].join(','));
 
             motionItems.forEach(function (item, index) {
                 item.classList.add('motion-item');
                 item.style.setProperty('--reveal-delay', String((index % 3) * 80) + 'ms');
 
-                if (item.classList.contains('hero-stage') || item.classList.contains('product-showcase')) {
-                    item.classList.add('motion-window');
-                } else if (item.matches('.hero-copy h1, .section-heading, .feature-intro, .contact-page-heading, .footer-art')) {
+                if (item.matches('.hero-copy h1, .product-hero-copy h1, .section-heading h2, .feature-intro h2, .contact-page-heading h1, .cta-band h2, .product-cta h2')) {
                     item.classList.add('motion-mask');
-                } else if (item.matches('.product-card, .feature-grid article, .more-card, .contact-page-card')) {
-                    item.classList.add('motion-card');
                 } else {
                     item.classList.add('motion-soft');
                 }
