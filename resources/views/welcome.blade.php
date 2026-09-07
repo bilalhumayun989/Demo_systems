@@ -14,8 +14,8 @@
             <div class="hero-summary">
                 <p>Six focused systems for retail, salons, couriers, distribution, restaurants and paddle clubs&mdash;built to make daily work simpler.</p>
                 <div class="hero-actions">
-                    <a class="button button-primary" href="#solutions">Explore software <span>&darr;</span></a>
-                    <a class="button button-ghost" href="{{ route('software.contact') }}">Talk to our team <span>&nearr;</span></a>
+                    <a class="button button-primary" href="#solutions">Explore software</a>
+                    <a class="button button-ghost" href="{{ route('software.contact') }}">Talk to our team</a>
                 </div>
             </div>
         </div>
@@ -37,12 +37,12 @@
             </div>
             <div class="product-grid">
                 @foreach($products as $slug => $product)
-                    <article class="product-card" style="--accent: {{ $product['color'] }}; --soft: {{ $product['soft_color'] }}; --secondary: {{ $product['secondary_color'] }}; --accent-text: {{ $product['accent_text'] }}">
+                    <a class="product-card" href="{{ route('software.show', $slug) }}" aria-label="Explore {{ $product['name'] }}" style="--accent: {{ $product['color'] }}; --soft: {{ $product['soft_color'] }}; --secondary: {{ $product['secondary_color'] }}; --accent-text: {{ $product['accent_text'] }}">
                         <div class="product-icon">@include('software._icon', ['icon' => $product['icon']])</div>
                         <span class="product-number">0{{ $loop->iteration }}</span>
                         <div class="product-card-copy"><small>{{ $product['eyebrow'] }}</small><h3>{{ $product['name'] }}</h3><p>{{ $product['tagline'] }}</p></div>
-                        <a href="{{ route('software.show', $slug) }}" aria-label="Explore {{ $product['name'] }}">Explore solution <span>↗</span></a>
-                    </article>
+                        <span class="product-card-action">Explore solution <span aria-hidden="true">↗</span></span>
+                    </a>
                 @endforeach
             </div>
         </div>
