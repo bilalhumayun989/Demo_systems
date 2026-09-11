@@ -1,21 +1,21 @@
 @extends('layouts.software')
 
-@section('title', 'BroshTech — Software built for real business')
-@section('meta_description', 'Explore six purpose-built management systems for retail, salons, couriers, distribution, restaurants and paddle clubs.')
+@section('title', 'Vendify — Business management for modern retail')
+@section('meta_description', 'Vendify is a flexible POS and business management platform for shops, salons and service-based businesses.')
 
 @section('content')
     <section class="hero">
         <div class="shell hero-intro">
             <div class="hero-copy">
-                <div class="hero-kicker"><span></span> BroshTech software suite</div>
-                <h1>Management software built for <em>real business.</em></h1>
+                <div class="hero-kicker"><span></span> Vendify by BroshTech</div>
+                <h1>Built for <em>modern retail and service businesses.</em></h1>
             </div>
 
             <div class="hero-summary">
-                <p>Six focused systems for retail, salons, couriers, distribution, restaurants and paddle clubs&mdash;built to make daily work simpler.</p>
+                <p>Run your entire business from one connected workspace. Manage sales, customers, inventory, employees, appointments and daily operations without switching between multiple systems.</p>
                 <div class="hero-actions">
-                    <a class="button button-primary" href="#solutions">Explore software</a>
-                    <a class="button button-ghost" href="{{ route('software.contact') }}">Talk to our team</a>
+                    <a class="button button-primary" href="https://pos.broshtech.com/demo" target="_blank" rel="noopener noreferrer">Try the demo</a>
+                    <a class="button button-ghost" href="{{ route('software.contact', ['product' => 'vendify']) }}">Talk to our team</a>
                 </div>
             </div>
         </div>
@@ -23,7 +23,7 @@
         <div class="shell hero-stage" aria-label="Business software dashboard preview">
             <div class="hero-visual">
                 <div class="dashboard-image-card">
-                    <img src="{{ asset('images/software_dashboard.jpeg') }}" alt="BroshTech software dashboard" loading="eager">
+                    <img src="{{ asset('images/software_dashboard.jpeg') }}" alt="Vendify business management dashboard" loading="eager">
                 </div>
             </div>
         </div>
@@ -32,8 +32,8 @@
     <section class="solutions" id="solutions">
         <div class="shell">
             <div class="section-heading">
-                <div><span class="section-kicker">Our software suite</span><h2>One challenge.<br><em>One focused solution.</em></h2></div>
-                <p>Purpose-built tools that fit your industry—without the bloat, complexity or steep learning curve.</p>
+                <div><span class="section-kicker">Everything you need</span><h2>More control.<br><em>Less busywork.</em></h2></div>
+                <p>Powerful tools that connect your sales, staff, stock and customers so your business can move faster.</p>
             </div>
             <div class="product-grid">
                 @foreach($products as $slug => $product)
@@ -51,23 +51,23 @@
     <section class="why-us" id="why-us">
         <div class="shell why-grid">
             <div class="why-copy">
-                <span class="section-kicker section-kicker-light">Why BroshTech</span>
-                <h2>Technology should make business feel <em>simpler.</em></h2>
-                <p>We begin with the daily realities of your operation, then build software around them. The result is technology your team can understand, adopt and depend on.</p>
-                <a class="button button-light" href="{{ route('software.contact') }}">Start a conversation <span>→</span></a>
+                <span class="section-kicker section-kicker-light">One connected workspace</span>
+                <h2>Everything your business needs to run <em>better.</em></h2>
+                <p>Vendify connects your sales, staff, stock and customers in one practical workspace built for the way modern retail and service businesses work.</p>
+                <a class="button button-light" href="https://pos.broshtech.com/demo" target="_blank" rel="noopener noreferrer">See Vendify in action <span>↗</span></a>
             </div>
             <div class="why-list">
-                <div><span>01</span><h3>Built for your industry</h3><p>Workflows and features shaped around real operational needs.</p></div>
-                <div><span>02</span><h3>Ready to scale</h3><p>Solid foundations that grow alongside your team and locations.</p></div>
-                <div><span>03</span><h3>Support that listens</h3><p>Helpful people who understand both the product and your business.</p></div>
+                <div><span>01</span><h3>Connected operations</h3><p>Bring sales, inventory, staff and customers together in one workspace.</p></div>
+                <div><span>02</span><h3>Less busywork</h3><p>Keep everyday workflows clear, organized and easy for your team to follow.</p></div>
+                <div><span>03</span><h3>Practical insights</h3><p>Use reports and dashboards to understand performance and make better decisions.</p></div>
             </div>
         </div>
     </section>
 
     <section class="cta-band">
         <div class="shell cta-inner">
-            <div><span class="section-kicker">Ready when you are</span><h2>Let’s build a better way to work.</h2></div>
-            <a class="button button-dark" href="{{ route('software.contact') }}">Talk to sales <span>→</span></a>
+            <div><span class="section-kicker">Ready when you are</span><h2>See how Vendify can simplify your business.</h2></div>
+            <a class="button button-dark" href="https://pos.broshtech.com/demo" target="_blank" rel="noopener noreferrer">Open the demo <span>↗</span></a>
         </div>
     </section>
 @endsection

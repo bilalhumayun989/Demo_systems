@@ -136,10 +136,6 @@
                 '.feature-intro .section-kicker',
                 '.feature-intro h2',
                 '.feature-intro > p',
-                '.product-title-row > span',
-                '.product-hero-copy h1',
-                '.product-hero-copy h2',
-                '.product-hero-copy > p',
                 '.contact-page-heading .section-kicker',
                 '.contact-page-heading h1',
                 '.contact-page-heading > p',
@@ -153,7 +149,7 @@
                 item.classList.add('motion-item');
                 item.style.setProperty('--reveal-delay', String((index % 3) * 80) + 'ms');
 
-                if (item.matches('.product-hero-copy h1, .section-heading h2, .feature-intro h2, .contact-page-heading h1, .cta-band h2, .product-cta h2')) {
+                if (item.matches('.section-heading h2, .feature-intro h2, .contact-page-heading h1, .cta-band h2, .product-cta h2')) {
                     item.classList.add('motion-mask');
                 } else {
                     item.classList.add('motion-soft');
@@ -182,8 +178,15 @@
             }
 
             var scrollText = document.querySelector('.why-copy h2');
-            var heroStage = document.querySelector('.hero-stage');
-            var heroImage = document.querySelector('.dashboard-image-card img');
+            var scrollMedia = Array.from(document.querySelectorAll('.hero-stage, .product-showcase')).map(function (container) {
+                return {
+                    container: container,
+                    image: container.querySelector('.dashboard-image-card img, .showcase-image-wrap img'),
+                    maximumScale: container.classList.contains('hero-stage') ? 0.05 : 0.04
+                };
+            }).filter(function (media) {
+                return media.image;
+            });
             var scrollWords = [];
             var frameRequested = false;
 
@@ -230,13 +233,14 @@
                     });
                 }
 
-                if (heroStage && heroImage) {
-                    var stageRect = heroStage.getBoundingClientRect();
-                    var imageProgress = Math.min(1, Math.max(0, (window.innerHeight - stageRect.top) / (window.innerHeight + stageRect.height)));
-                    var imageScale = prefersReducedMotion ? 1 : 1 + (imageProgress * 0.025);
+                scrollMedia.forEach(function (media) {
+                    var mediaRect = media.container.getBoundingClientRect();
+                    var mediaProgress = Math.min(1, Math.max(0, (window.innerHeight - mediaRect.top) / (window.innerHeight + mediaRect.height)));
+                    var mediaScale = prefersReducedMotion ? 1 : 1 + (mediaProgress * media.maximumScale);
+                    var mediaOffset = prefersReducedMotion ? 0 : mediaProgress * -6;
 
-                    heroImage.style.transform = 'scale(' + imageScale.toFixed(4) + ')';
-                }
+                    media.image.style.transform = 'translateY(' + mediaOffset.toFixed(2) + 'px) scale(' + mediaScale.toFixed(4) + ')';
+                });
             }
 
             function requestScrollUpdate() {

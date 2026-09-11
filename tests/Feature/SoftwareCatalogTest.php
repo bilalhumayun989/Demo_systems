@@ -7,7 +7,7 @@ use Tests\TestCase;
 
 class SoftwareCatalogTest extends TestCase
 {
-    public function test_homepage_renders_all_six_products_and_sales_actions(): void
+    public function test_homepage_renders_all_products_and_demo_actions(): void
     {
         $response = $this->get('/');
 
@@ -19,8 +19,9 @@ class SoftwareCatalogTest extends TestCase
             ->assertSee('DOMS')
             ->assertSee('RMS')
             ->assertSee('Paddle')
-                ->assertSee('images/software_dashboard.jpeg', false)
-            ->assertSee(route('software.contact'), false);
+            ->assertSee('More control.')
+            ->assertSee('https://pos.broshtech.com/demo', false)
+            ->assertSee('images/software_dashboard.jpeg', false);
     }
 
     #[DataProvider('products')]
@@ -36,7 +37,17 @@ class SoftwareCatalogTest extends TestCase
     public function test_vendify_detail_page_links_to_the_live_demo(): void
     {
         $this->get('/software/vendify')
-            ->assertSee('https://pos.broshtech.com/', false)
+            ->assertSee('https://pos.broshtech.com/demo', false)
+            ->assertSee('Open live demo');
+    }
+
+    public function test_rms_detail_page_uses_restaurant_content_and_live_demo(): void
+    {
+        $this->get('/software/rms')
+            ->assertSee('RMS built for')
+            ->assertSee('modern restaurants and food businesses.')
+            ->assertSee('Orders &amp; payments', false)
+            ->assertSee('http://187.127.204.45/rms-system/demo', false)
             ->assertSee('Open live demo');
     }
 

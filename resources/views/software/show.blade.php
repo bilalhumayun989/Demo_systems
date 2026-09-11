@@ -10,8 +10,7 @@
             <a class="back-link" href="{{ route('software.index') }}#solutions"><span>←</span> All solutions</a>
             <div class="product-hero-grid">
                 <div class="product-hero-copy">
-                    <div class="product-title-row"><div class="product-icon product-icon-large">@include('software._icon', ['icon' => $product['icon']])</div><span>{{ $product['eyebrow'] }}</span></div>
-                    <h1>{{ $product['name'] }}</h1>
+                    <h1>{{ $product['name'] }} built for <em>{{ $product['hero_focus'] }}</em></h1>
                     <h2>{{ $product['tagline'] }}</h2>
                     <p>{{ $product['description'] }}</p>
                     <div class="product-actions">
