@@ -14,17 +14,17 @@
             <div class="hero-summary">
                 <p>Run your entire business from one connected workspace. Manage sales, customers, inventory, employees, appointments and daily operations without switching between multiple systems.</p>
                 <div class="hero-actions">
-                    <a class="button button-primary" href="https://pos.broshtech.com/demo" target="_blank" rel="noopener noreferrer">Try the demo</a>
+                    <a class="button button-primary" href="https://www.broshtech.com/" target="_blank" rel="noopener noreferrer">Visit website</a>
                     <a class="button button-ghost" href="{{ route('software.contact', ['product' => 'vendify']) }}">Talk to our team</a>
                 </div>
             </div>
         </div>
 
-        <div class="shell hero-stage" aria-label="Business software dashboard preview">
-            <div class="hero-visual">
-                <div class="dashboard-image-card">
-                    <img src="{{ asset('images/software_dashboard.jpeg') }}" alt="Vendify business management dashboard" loading="eager">
-                </div>
+        <div class="shell hero-stage project-stage" aria-label="All six live project previews">
+            <div class="project-preview-grid">
+                @foreach($products as $previewProduct)
+                    @include('software._preview', ['previewProduct' => $previewProduct])
+                @endforeach
             </div>
         </div>
     </section>

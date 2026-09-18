@@ -255,5 +255,31 @@
             window.addEventListener('resize', requestScrollUpdate);
         }());
     </script>
+    <script>
+        document.querySelectorAll('[data-project-preview]').forEach(function (preview) {
+            var viewport = preview.querySelector('.project-preview-viewport');
+            var frame = preview.querySelector('iframe');
+            if (!frame) {
+                return;
+            }
+            var message = preview.querySelector('.project-preview-message');
+            var url = new URL(frame.dataset.src, window.location.href);
+
+            if (window.location.protocol === 'https:' && url.protocol === 'http:') {
+                message.textContent = 'This demo opens in a new tab. Select Open demo below.';
+                return;
+            }
+
+            function resizePreview() {
+                frame.style.transform = 'scale(' + viewport.clientWidth / 1280 + ')';
+            }
+
+            frame.src = url.href;
+            frame.hidden = false;
+            message.hidden = true;
+            resizePreview();
+            new ResizeObserver(resizePreview).observe(viewport);
+        });
+    </script>
 </body>
 </html>

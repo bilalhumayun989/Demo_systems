@@ -15,7 +15,9 @@
                     <p>{{ $product['description'] }}</p>
                     <div class="product-actions">
                         @if($product['demo_url'])
-                            <a class="button button-accent" href="{{ $product['demo_url'] }}" target="_blank" rel="noopener noreferrer">Open live demo <span>↗</span></a>
+                            <a class="button button-accent" href="{{ $product['demo_url'] }}" target="_blank" rel="noopener noreferrer">{{ $product['demo_label'] ?? 'Open live demo' }} <span>↗</span></a>
+                        @elseif(isset($product['demo_label']))
+                            <a class="button button-accent" href="{{ route('software.contact', ['product' => $slug]) }}">{{ $product['demo_label'] }}</a>
                         @else
                             <button class="button button-muted" type="button" disabled title="Demo coming soon">Demo coming soon</button>
                         @endif
@@ -25,11 +27,9 @@
                 <div class="product-showcase">
                     <div class="showcase-window">
                         <div class="showcase-bar"><i></i><i></i><i></i><span>{{ strtolower(str_replace(' ', '-', $product['name'])) }}.app</span></div>
-                        <div class="showcase-image-wrap">
-                            <img src="{{ asset('images/software_dashboard.jpeg') }}" alt="{{ $product['name'] }} software dashboard" loading="eager">
-                        </div>
+                        @include('software._preview', ['previewProduct' => $product])
                     </div>
-                    <div class="showcase-badge"><span>✓</span><strong>All in one place</strong><small>Simple. Connected. Reliable.</small></div>
+                    <div class="showcase-badge"><span>✓</span><strong>{{ $product['badge_heading'] ?? 'All in one place' }}</strong><small>{{ $product['badge_text'] ?? 'Simple. Connected. Reliable.' }}</small></div>
                 </div>
             </div>
         </div>
@@ -37,7 +37,7 @@
 
     <section class="feature-section">
         <div class="shell">
-            <div class="feature-intro"><span class="section-kicker">Everything you need</span><h2>More control.<br><em>Less busywork.</em></h2><p>Core tools designed to keep your team aligned and your operation moving.</p></div>
+            <div class="feature-intro"><span class="section-kicker">Everything you need</span><h2>{{ $product['feature_heading'] ?? 'More control.' }}<br><em>{{ $product['feature_focus'] ?? 'Less busywork.' }}</em></h2><p>{{ $product['feature_intro'] ?? 'Core tools designed to keep your team aligned and your operation moving.' }}</p></div>
             <div class="feature-grid">
                 @foreach($product['features'] as $feature)
                     <article><span class="feature-check">✓</span><h3>{{ $feature['title'] }}</h3><p>{{ $feature['description'] }}</p></article>
@@ -48,7 +48,7 @@
 
     <section class="product-cta" style="--accent: {{ $product['color'] }}; --secondary: {{ $product['secondary_color'] }}; --accent-text: {{ $product['accent_text'] }}">
         <div class="shell">
-            <div><span>Bring better operations within reach.</span><h2>Ready to get started with {{ $product['name'] }}?</h2></div>
+            <div><span>{{ $product['cta_intro'] ?? 'Bring better operations within reach.' }}</span><h2>{{ $product['cta_heading'] ?? 'Ready to get started with ' . $product['name'] . '?' }}</h2></div>
             <div class="product-cta-actions">
                 @if($product['demo_url'])<a class="button button-white-outline" href="{{ $product['demo_url'] }}" target="_blank" rel="noopener noreferrer">Try the demo <span>↗</span></a>@endif
                 <a class="button button-white" href="{{ route('software.contact', ['product' => $slug]) }}">Contact sales <span>→</span></a>

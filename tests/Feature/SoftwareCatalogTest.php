@@ -18,20 +18,37 @@ class SoftwareCatalogTest extends TestCase
             ->assertSee('CX Couriers')
             ->assertSee('DOMS')
             ->assertSee('RMS')
-            ->assertSee('Paddle')
+            ->assertSee('Padel POS')
             ->assertSee('More control.')
             ->assertSee('https://pos.broshtech.com/demo', false)
-            ->assertSee('images/software_dashboard.jpeg', false);
+            ->assertDontSee('images/software_dashboard.jpeg', false);
+
+        foreach (['Vendify', 'CX Couriers', 'RMS', 'Padel POS'] as $name) {
+            $response->assertSee('title="'.$name.' live project preview"', false);
+        }
+
+        foreach (['Cloud Khata', 'DOMS'] as $name) {
+            $response->assertSee('aria-label="'.$name.' project overview"', false)
+                ->assertDontSee('title="'.$name.' live project preview"', false);
+        }
     }
 
     #[DataProvider('products')]
     public function test_each_product_renders_its_detail_page(string $slug, string $name): void
     {
-        $this->get("/software/{$slug}")
+        $response = $this->get("/software/{$slug}")
             ->assertViewIs('software.show')
             ->assertSee($name)
-            ->assertSee('images/software_dashboard.jpeg', false)
+            ->assertDontSee('images/software_dashboard.jpeg', false)
             ->assertSee('Buy now');
+
+        if (in_array($slug, ['cloud-khata', 'doms'], true)) {
+            $response->assertSee('aria-label="'.$name.' project overview"', false)
+                ->assertSee('Launch demo in a new tab')
+                ->assertDontSee('<iframe', false);
+        } else {
+            $response->assertSee('title="'.$name.' live project preview"', false);
+        }
     }
 
     public function test_vendify_detail_page_links_to_the_live_demo(): void
@@ -77,7 +94,7 @@ class SoftwareCatalogTest extends TestCase
             'CX Couriers' => ['cx-couriers', 'CX Couriers'],
             'DOMS' => ['doms', 'DOMS'],
             'RMS' => ['rms', 'RMS'],
-            'Paddle' => ['paddle', 'Paddle'],
+            'Padel POS' => ['paddle', 'Padel POS'],
         ];
     }
 }
