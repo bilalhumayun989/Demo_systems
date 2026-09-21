@@ -4362,8 +4362,17 @@ body {
 	cursor: default !important;
 }
 
+/* Allow live software interaction inside BIG card iframe */
+.project-preview.is-hero-big .project-preview-viewport::after {
+	pointer-events: none !important;
+}
+
+.project-preview.is-hero-big iframe {
+	pointer-events: auto !important;
+}
+
 .project-preview.is-hero-small {
-	opacity: 0.72 !important;
+	opacity: 0.76 !important;
 	filter: none !important;
 	cursor: pointer !important;
 	z-index: 2 !important;
