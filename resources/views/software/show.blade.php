@@ -25,11 +25,7 @@
                     </div>
                 </div>
                 <div class="product-showcase">
-                    <div class="showcase-window">
-                        <div class="showcase-bar"><i></i><i></i><i></i><span>{{ strtolower(str_replace(' ', '-', $product['name'])) }}.app</span></div>
-                        @include('software._preview', ['previewProduct' => $product])
-                    </div>
-                    <div class="showcase-badge"><span>✓</span><strong>{{ $product['badge_heading'] ?? 'All in one place' }}</strong><small>{{ $product['badge_text'] ?? 'Simple. Connected. Reliable.' }}</small></div>
+                    @include('software._preview', ['previewProduct' => $product, 'hideFooter' => true])
                 </div>
             </div>
         </div>
