@@ -1,4 +1,4 @@
-<div class="project-preview" data-project-preview>
+<div class="project-preview" data-project-preview data-preview-card>
     <div class="project-preview-viewport">
         @if($previewProduct['embed_enabled'] ?? true)
             <div class="project-preview-spinner" aria-label="Loading live preview">

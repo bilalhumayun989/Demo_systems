@@ -45,6 +45,7 @@ return [
             'secondary_color' => '#d6d6d2',
             'accent_text' => '#ffffff',
             'demo_url' => 'https://pos.broshtech.com/demo',
+            'embed_enabled' => true,
             'features' => [
                 ['title' => 'Smart POS & sales', 'description' => 'Process sales quickly, manage payments, apply coupons and keep every transaction organized in one place.'],
                 ['title' => 'Inventory & purchasing', 'description' => 'Track products, stock levels, low-stock alerts, suppliers, purchases and stock adjustments with better visibility.'],
@@ -70,6 +71,7 @@ return [
             'secondary_color' => '#d6d6d2',
             'accent_text' => '#ffffff',
             'demo_url' => 'http://187.127.204.45/courier/demo',
+            'embed_enabled' => true,
             'features' => [
                 ['title' => 'Fleet management', 'description' => 'Manage vans, vehicle status, fixed costs and driver assignments from one place.'],
                 ['title' => 'Trip operations', 'description' => 'Record daily trips, customers, routes, fares and vehicle activity with clear operational history.'],
@@ -119,6 +121,7 @@ return [
             'secondary_color' => '#d6d6d2',
             'accent_text' => '#ffffff',
             'demo_url' => 'http://187.127.204.45/rms-system/demo',
+            'embed_enabled' => true,
             'features' => [
                 ['title' => 'Orders & payments', 'description' => 'Create and manage customer orders through a streamlined workflow while keeping payment and order history organized.'],
                 ['title' => 'Kitchen operations', 'description' => 'Send and manage kitchen orders digitally so your service team and kitchen stay aligned from order placement to completion.'],
@@ -149,6 +152,7 @@ return [
             'secondary_color' => '#d6d6d2',
             'accent_text' => '#ffffff',
             'demo_url' => 'http://187.127.204.45/padel/demo',
+            'embed_enabled' => true,
             'features' => [
                 ['title' => 'Court bookings & schedule', 'description' => 'Manage court availability, create bookings, prevent scheduling conflicts and keep every session organized through one shared schedule.'],
                 ['title' => 'Players & teams', 'description' => 'Manage players, organize teams, track skill levels, team activity and match performance from one centralized workspace.'],
