@@ -4383,6 +4383,23 @@ body {
 	box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12) !important;
 }
 
+/* Individual Solution / Product Detail pages: Live interactive iframe, no cursor pointer */
+.product-page .project-preview,
+.product-showcase .project-preview {
+	cursor: default !important;
+}
+
+.product-page .project-preview-viewport::after,
+.product-showcase .project-preview-viewport::after {
+	pointer-events: none !important;
+	cursor: default !important;
+}
+
+.product-page .project-preview-viewport iframe,
+.product-showcase .project-preview-viewport iframe {
+	pointer-events: auto !important;
+}
+
 /* Suppress all CSS hover/transform effects when JS controls the layout */
 .project-preview-grid.has-abs-layout .project-preview {
 	transform: none !important;
