@@ -23,7 +23,7 @@ return [
             'secondary_color' => '#d6d6d2',
             'accent_text' => '#ffffff',
             'demo_url' => 'https://cloudkhata.broshtech.com/demo',
-            'embed_enabled' => false,
+            'embed_enabled' => true,
             'features' => [
                 ['title' => 'POS & sales', 'description' => 'Process daily sales, manage payments, create invoices and keep every transaction organized in one place.'],
                 ['title' => 'Products & inventory', 'description' => 'Manage products, pricing and stock levels with stock history, adjustments, transfers and inventory alerts.'],
@@ -97,7 +97,7 @@ return [
             'secondary_color' => '#d6d6d2',
             'accent_text' => '#ffffff',
             'demo_url' => 'http://187.127.204.45/doms-sytem/demo',
-            'embed_enabled' => false,
+            'embed_enabled' => true,
             'features' => [
                 ['title' => 'Trip & delivery workflow', 'description' => 'Manage delivery trips from preparation and dispatch through delivery results, collections and final closure.'],
                 ['title' => 'Deliverymen & markets', 'description' => 'Track delivery teams, assigned market areas, trip performance and customer market activity in one place.'],
