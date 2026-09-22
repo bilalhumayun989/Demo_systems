@@ -13,6 +13,10 @@
                 <a href="{{ $previewProduct['demo_url'] }}" target="_blank" rel="noopener noreferrer">Launch demo in a new tab <span aria-hidden="true">↗</span></a>
             </div>
         @endif
+        <div class="intro-card-click-badge">
+            <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M13.64 21.97a1 1 0 0 1-.94-.66l-2.48-6.44-4.52 3.16a1 1 0 0 1-1.57-.83V3.4a1 1 0 0 1 1.63-.78l13 10.5a1 1 0 0 1-.57 1.76l-5.3.38 2.5 6.27a1 1 0 0 1-.55 1.3l-1.12.44a.9.9 0 0 1-.57.7Z"/></svg>
+            <span>Click for Demo</span>
+        </div>
     </div>
     @unless($hideFooter ?? false)
         <div class="project-preview-footer">

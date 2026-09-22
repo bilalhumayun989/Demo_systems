@@ -167,7 +167,7 @@
             var allObserved = Array.from(motionItems);
             var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-            if (!('IntersectionObserver' in window) || prefer sReducedMotion) {
+            if (!('IntersectionObserver' in window) || prefersReducedMotion) {
                 allObserved.forEach(function (item) {
                     item.classList.add('is-visible');
                 });
@@ -186,8 +186,8 @@
                 });
             }
 
-            if (!prefersReducedMotion) {
-                var heroGrid       = document.querySelector('.project-preview-grid');
+            var heroGrid       = document.querySelector('.project-preview-grid');
+            if (heroGrid) {
                 var heroActiveCard = null;
                 var heroAbsLayout  = false;
                 var heroLocked     = false;

@@ -4345,6 +4345,34 @@ body {
 	filter: none
 }
 
+.project-preview .intro-card-click-badge {
+	position: absolute;
+	bottom: 12px;
+	right: 12px;
+	z-index: 15;
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	padding: 5px 12px;
+	border-radius: 999px;
+	background: rgba(17, 17, 17, 0.82);
+	backdrop-filter: blur(6px);
+	color: #ffffff;
+	font-size: 11px;
+	font-weight: 700;
+	pointer-events: none;
+	opacity: 0;
+	transition: opacity 0.2s ease;
+}
+
+.project-preview:hover .intro-card-click-badge {
+	opacity: 1;
+}
+
+.project-preview.is-hero-big .intro-card-click-badge {
+	display: none !important;
+}
+
 /* Click-to-expand: one big card left, 5 small stacked right */
 .project-preview-grid.has-active-card .project-preview {
 	cursor: pointer;
@@ -4378,6 +4406,10 @@ body {
 .project-preview.is-hero-small:hover {
 	opacity: 1 !important;
 	box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12) !important;
+}
+
+.project-preview.is-hero-small:hover .intro-card-click-badge {
+	opacity: 1 !important;
 }
 
 /* Individual Solution / Product Detail pages: Live interactive iframe, no cursor pointer */
@@ -4448,7 +4480,8 @@ body {
 	height: 800px;
 	border: 0;
 	transform-origin: top left;
-	background: #fff
+	background: #fff;
+	pointer-events: none;
 }
 
 .project-preview-spinner {
