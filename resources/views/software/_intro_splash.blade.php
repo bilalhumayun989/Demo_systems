@@ -6,13 +6,15 @@
             <span>BroshTech Software Platform</span>
         </div>
 
-        <h2 class="intro-title">6 Connected Business Solutions. <em class="intro-highlight">One Ecosystem.</em></h2>
+        <h1 class="intro-title">Interactive Business Software Demos <em class="intro-highlight">Built to Accelerate Growth.</em></h1>
 
-        <div class="intro-demo-hint-pill">
-            <span class="hint-cursor-icon">
-                <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M13.64 21.97a1 1 0 0 1-.94-.66l-2.48-6.44-4.52 3.16a1 1 0 0 1-1.57-.83V3.4a1 1 0 0 1 1.63-.78l13 10.5a1 1 0 0 1-.57 1.76l-5.3.38 2.5 6.27a1 1 0 0 1-.55 1.3l-1.12.44a.9.9 0 0 1-.57.7Z"/></svg>
-            </span>
-            <span>Click any card below to launch live interactive demo</span>
+        <!-- Real-Time JS Guided Demo Cursor -->
+        <div id="intro-tour-cursor" class="intro-tour-cursor" aria-hidden="true">
+            <svg class="tour-pointer-svg" viewBox="0 0 24 24" width="24" height="24" fill="#111111" stroke="#ffffff" stroke-width="1.8">
+                <path d="M13.64 21.97a1 1 0 0 1-.94-.66l-2.48-6.44-4.52 3.16a1 1 0 0 1-1.57-.83V3.4a1 1 0 0 1 1.63-.78l13 10.5a1 1 0 0 1-.57 1.76l-5.3.38 2.5 6.27a1 1 0 0 1-.55 1.3l-1.12.44a.9.9 0 0 1-.57.7Z"/>
+            </svg>
+            <div class="tour-tap-ripple"></div>
+            <span class="tour-guidance-badge">Click card &rarr; becomes BIG!</span>
         </div>
 
         <div class="intro-stage-grid">

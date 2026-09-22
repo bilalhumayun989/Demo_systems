@@ -629,16 +629,16 @@
                             introGrid.getBoundingClientRect(); /* force reflow */
                         }
 
-                        /* Turn on smooth transitions */
+                        /* Turn on ultra-smooth transitions for card expansion */
                         var easing = 'cubic-bezier(0.16, 1, 0.3, 1)';
                         introCards.forEach(function (card) {
                             card.style.transition = [
-                                'top 0.85s '    + easing,
-                                'left 0.85s '   + easing,
-                                'width 0.85s '  + easing,
-                                'height 0.85s ' + easing,
-                                'opacity 0.55s ease',
-                                'box-shadow 0.5s ease'
+                                'top 1.1s '     + easing,
+                                'left 1.1s '    + easing,
+                                'width 1.1s '   + easing,
+                                'height 1.1s '  + easing,
+                                'opacity 0.65s ease',
+                                'box-shadow 0.6s ease'
                             ].join(', ');
                         });
 
@@ -710,14 +710,111 @@
                         setTimeout(function () { expandLocked = false; }, 650);
                     }
 
-                    /* Click handlers on each intro card */
+                    /* ── Real-Time JS Guided Demo Cursor Tour ── */
+                    var tourCursor = splash.querySelector('#intro-tour-cursor');
+                    var tourBadge  = tourCursor ? tourCursor.querySelector('.tour-guidance-badge') : null;
+                    var tourRipple = tourCursor ? tourCursor.querySelector('.tour-tap-ripple') : null;
+                    var tourActive = true;
+                    var tourTimers = [];
+
+                    function cancelTour() {
+                        if (!tourActive) { return; }
+                        tourActive = false;
+                        tourTimers.forEach(clearTimeout);
+                        if (tourCursor) {
+                            tourCursor.style.opacity = '0';
+                            tourCursor.style.pointerEvents = 'none';
+                        }
+                    }
+
+                    function moveCursorTo(targetElem, textLabel, tapClick, onComplete) {
+                        if (!tourActive || !tourCursor || !targetElem) { return; }
+                        var splashInner = splash.querySelector('.intro-splash-inner');
+                        var innerRect   = splashInner.getBoundingClientRect();
+                        var elemRect    = targetElem.getBoundingClientRect();
+
+                        var destX = (elemRect.left - innerRect.left) + (elemRect.width / 2);
+                        var destY = (elemRect.top - innerRect.top) + (elemRect.height / 2);
+
+                        tourCursor.style.transform = 'translate(' + Math.round(destX) + 'px, ' + Math.round(destY) + 'px)';
+                        tourCursor.style.opacity   = '1';
+
+                        if (textLabel && tourBadge) {
+                            tourBadge.textContent = textLabel;
+                        }
+
+                        if (tapClick) {
+                            var t1 = setTimeout(function () {
+                                if (!tourActive) { return; }
+                                tourCursor.classList.add('is-clicking');
+                                if (tourRipple) {
+                                    tourRipple.classList.remove('is-animating');
+                                    void tourRipple.offsetWidth; /* reflow */
+                                    tourRipple.classList.add('is-animating');
+                                }
+                            }, 1050);
+
+                            var t2 = setTimeout(function () {
+                                if (!tourActive) { return; }
+                                tourCursor.classList.remove('is-clicking');
+                                if (typeof onComplete === 'function') { onComplete(); }
+                            }, 1400);
+
+                            tourTimers.push(t1, t2);
+                        }
+                    }
+
+                    /* Run tour sequence */
+                    if (tourCursor && introCards.length >= 2 && window.innerWidth > 600) {
+                        var mainTitle = splash.querySelector('.intro-title');
+
+                        /* Step 1 (t = 800ms): Show cursor near top main headline */
+                        tourTimers.push(setTimeout(function () {
+                            if (mainTitle && tourActive) {
+                                moveCursorTo(mainTitle, 'Click any card -> becomes BIG!', false);
+                            }
+                        }, 800));
+
+                        /* Step 2 (t = 2400ms): Glide to Card 0 & click -> Card 0 becomes BIG! */
+                        tourTimers.push(setTimeout(function () {
+                            if (!tourActive) { return; }
+                            moveCursorTo(introCards[0], 'Clicking Card 1...', true, function () {
+                                if (!tourActive || dismissed) { return; }
+                                activateCard(introCards[0]);
+                                if (tourBadge) { tourBadge.textContent = 'Card 1 expanded BIG! ✨'; }
+                            });
+                        }, 2400));
+
+                        /* Step 3 (t = 6000ms): Glide to Card 1 & click -> Card 1 becomes BIG! */
+                        tourTimers.push(setTimeout(function () {
+                            if (!tourActive) { return; }
+                            moveCursorTo(introCards[1], 'Switching demo...', true, function () {
+                                if (!tourActive || dismissed) { return; }
+                                activateCard(introCards[1]);
+                                if (tourBadge) { tourBadge.textContent = 'Card 2 expanded BIG! ✨'; }
+                            });
+                        }, 6000));
+
+                        /* Step 4 (t = 9400ms): Glide to skip button & dissolve */
+                        tourTimers.push(setTimeout(function () {
+                            if (!tourActive) { return; }
+                            var skipBtn = splash.querySelector('#intro-skip-btn');
+                            if (skipBtn) {
+                                moveCursorTo(skipBtn, 'Explore platform', false);
+                            }
+                        }, 9400));
+                    }
+
+                    /* Click handlers on each intro card (User interaction cancels tour immediately) */
                     introCards.forEach(function (card) {
                         card.addEventListener('click', function (e) {
                             e.stopPropagation();
+                            cancelTour();
                             activateCard(card);
                         });
 
                         card.addEventListener('mouseenter', function () {
+                            cancelTour();
                             if (!dismissed && card !== activeCard) {
                                 card.style.opacity = '1';
                             }
@@ -729,13 +826,8 @@
                         });
                     });
 
-                    /* Auto-expand first card once fly-in animations finish (~1.6s) */
-                    setTimeout(function () {
-                        if (!dismissed && introCards[0]) { activateCard(introCards[0]); }
-                    }, 1600);
-
-                    /* Auto-dismiss after showing (7s for slow, clear intro) */
-                    var splashTimer = setTimeout(dismissSplash, 7000);
+                    /* Auto-dismiss after full slow showcase (10.8s) */
+                    var splashTimer = setTimeout(dismissSplash, 10800);
 
                     /* Skip button */
                     var skipBtn = document.getElementById('intro-skip-btn');
