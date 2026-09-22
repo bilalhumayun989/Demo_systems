@@ -524,189 +524,231 @@
 
         var splash = document.getElementById('intro-splash');
         if (splash) {
-            document.body.classList.add('modal-open');
+            try {
+                if (sessionStorage.getItem('has_seen_intro')) {
+                    splash.style.display = 'none';
+                    document.body.classList.remove('modal-open');
+                } else {
+                    sessionStorage.setItem('has_seen_intro', 'true');
+                    document.body.classList.add('modal-open');
 
-            var dismissed    = false;
-            var absLayout    = false;
-            var expandLocked = false;
-            var activeCard   = null;
-            var introGrid    = splash.querySelector('.intro-stage-grid');
-            var introCards   = Array.from(splash.querySelectorAll('.intro-project-card'));
+                    var dismissed    = false;
+                    var absLayout    = false;
+                    var expandLocked = false;
+                    var activeCard   = null;
+                    var introGrid    = splash.querySelector('.intro-stage-grid');
+                    var introCards   = Array.from(splash.querySelectorAll('.intro-project-card'));
 
-            /* ── dismiss: fade splash + ghost-fly cards into hero positions ── */
-            function dismissSplash() {
-                if (dismissed) { return; }
-                dismissed = true;
+                    /* ── dismiss: fade splash + ghost-fly cards into hero positions ── */
+                    function dismissSplash() {
+                        if (dismissed) { return; }
+                        dismissed = true;
 
-                var heroCards = Array.from(document.querySelectorAll('.project-preview-grid .project-preview'));
-                var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+                        var heroCards = Array.from(document.querySelectorAll('.project-preview-grid .project-preview'));
+                        var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-                document.body.classList.remove('modal-open');
-                splash.classList.add('is-dismissed');
+                        document.body.classList.remove('modal-open');
+                        splash.classList.add('is-dismissed');
 
-                if (introCards.length && heroCards.length && !prefersReducedMotion && window.innerWidth > 600) {
-                    introCards.forEach(function (card, idx) {
-                        var target = heroCards[idx];
-                        if (!target) { return; }
+                        if (introCards.length && heroCards.length && !prefersReducedMotion && window.innerWidth > 600) {
+                            introCards.forEach(function (card, idx) {
+                                var target = heroCards[idx];
+                                if (!target) { return; }
 
-                        var fromRect = card.getBoundingClientRect();
-                        var toRect   = target.getBoundingClientRect();
-                        if (fromRect.width === 0 || toRect.width === 0) { return; }
+                                var fromRect = card.getBoundingClientRect();
+                                var toRect   = target.getBoundingClientRect();
+                                if (fromRect.width === 0 || toRect.width === 0) { return; }
 
-                        var ghost = card.cloneNode(true);
-                        ghost.className = 'intro-flying-ghost';
-                        ghost.style.top       = fromRect.top  + 'px';
-                        ghost.style.left      = fromRect.left + 'px';
-                        ghost.style.width     = fromRect.width  + 'px';
-                        ghost.style.height    = fromRect.height + 'px';
-                        ghost.style.transform = 'none';
-                        ghost.style.opacity   = '1';
-                        document.body.appendChild(ghost);
+                                var ghost = card.cloneNode(true);
+                                ghost.className = 'intro-flying-ghost';
+                                ghost.style.top       = fromRect.top  + 'px';
+                                ghost.style.left      = fromRect.left + 'px';
+                                ghost.style.width     = fromRect.width  + 'px';
+                                ghost.style.height    = fromRect.height + 'px';
+                                ghost.style.transform = 'none';
+                                ghost.style.opacity   = '1';
+                                document.body.appendChild(ghost);
 
-                        var scaleX = toRect.width  / fromRect.width;
-                        var scaleY = toRect.height / fromRect.height;
-                        var tx = toRect.left - fromRect.left;
-                        var ty = toRect.top  - fromRect.top;
-                        var delay = idx * 55;
+                                var scaleX = toRect.width  / fromRect.width;
+                                var scaleY = toRect.height / fromRect.height;
+                                var tx = toRect.left - fromRect.left;
+                                var ty = toRect.top  - fromRect.top;
+                                var delay = idx * 55;
 
-                        ghost.getBoundingClientRect(); /* force reflow */
+                                ghost.getBoundingClientRect(); /* force reflow */
 
-                        setTimeout(function () {
-                            ghost.style.transform = 'translate(' + tx.toFixed(1) + 'px,' + ty.toFixed(1) + 'px) scale(' + scaleX.toFixed(4) + ',' + scaleY.toFixed(4) + ')';
-                            ghost.style.opacity   = '0';
-                        }, delay);
+                                setTimeout(function () {
+                                    ghost.style.transform = 'translate(' + tx.toFixed(1) + 'px,' + ty.toFixed(1) + 'px) scale(' + scaleX.toFixed(4) + ',' + scaleY.toFixed(4) + ')';
+                                    ghost.style.opacity   = '0';
+                                }, delay);
 
-                        setTimeout(function () {
-                            if (ghost.parentNode) { ghost.parentNode.removeChild(ghost); }
-                        }, delay + 900);
-                    });
-                }
+                                setTimeout(function () {
+                                    if (ghost.parentNode) { ghost.parentNode.removeChild(ghost); }
+                                }, delay + 900);
+                            });
+                        }
 
-                setTimeout(function () { splash.style.display = 'none'; }, 650);
-            }
+                        setTimeout(function () { splash.style.display = 'none'; }, 650);
+                    }
 
-            /* ── expand a card to fill the left 76%, shrink others to right ── */
-            function activateCard(target) {
-                if (expandLocked || dismissed) { return; }
+                    /* ── expand a card to fill the left 76%, shrink others to right ── */
+                    function activateCard(target) {
+                        if (expandLocked || dismissed) { return; }
 
-                /* Clicking the already-big card dismisses */
-                if (target === activeCard) {
-                    clearTimeout(splashTimer);
-                    dismissSplash();
-                    return;
-                }
+                        /* Clicking the already-big card dismisses */
+                        if (target === activeCard) {
+                            clearTimeout(splashTimer);
+                            dismissSplash();
+                            return;
+                        }
 
-                expandLocked = true;
+                        expandLocked = true;
 
-                var gridRect   = introGrid.getBoundingClientRect();
-                var containerW = gridRect.width;
-                var containerH = gridRect.height;
+                        var gridRect   = introGrid.getBoundingClientRect();
+                        var containerW = gridRect.width;
+                        var containerH = gridRect.height;
 
-                /* First call: snapshot current positions, switch to absolute layout */
-                if (!absLayout) {
-                    absLayout = true;
-                    introGrid.style.position = 'relative';
-                    introGrid.style.height   = containerH + 'px';
-                    introGrid.classList.add('has-abs-layout');
+                        /* First call: snapshot current positions, switch to absolute layout */
+                        if (!absLayout) {
+                            absLayout = true;
+                            introGrid.style.position = 'relative';
+                            introGrid.style.height   = containerH + 'px';
+                            introGrid.classList.add('has-abs-layout');
 
+                            introCards.forEach(function (card) {
+                                var r = card.getBoundingClientRect();
+                                card.style.position   = 'absolute';
+                                card.style.top        = (r.top  - gridRect.top)  + 'px';
+                                card.style.left       = (r.left - gridRect.left) + 'px';
+                                card.style.width      = r.width  + 'px';
+                                card.style.height     = r.height + 'px';
+                                card.style.margin     = '0';
+                                card.style.animation  = 'none';
+                                card.style.transition = 'none';
+                            });
+                            introGrid.getBoundingClientRect(); /* force reflow */
+                        }
+
+                        /* Turn on smooth transitions */
+                        var easing = 'cubic-bezier(0.16, 1, 0.3, 1)';
+                        introCards.forEach(function (card) {
+                            card.style.transition = [
+                                'top 0.85s '    + easing,
+                                'left 0.85s '   + easing,
+                                'width 0.85s '  + easing,
+                                'height 0.85s ' + easing,
+                                'opacity 0.55s ease',
+                                'box-shadow 0.5s ease'
+                            ].join(', ');
+                        });
+
+                        /* Layout: Row 1 = 1 BIG (left) + 2 SMALL (stacked right); Row 2 = 3 SMALL (side-by-side) */
+                        var gap = 16;
+                        var row1H = Math.round(containerH * 0.65);
+                        var row2H = containerH - row1H - gap;
+
+                        var bigW = Math.round(containerW * 0.67);
+                        var small12W = containerW - bigW - gap;
+                        var small12H = Math.floor((row1H - gap) / 2);
+
+                        var smalls = introCards.filter(function (c) { return c !== target; });
+
+                        /* 1 BIG Card (Top Left) */
+                        target.style.top     = '0px';
+                        target.style.left    = '0px';
+                        target.style.width   = bigW + 'px';
+                        target.style.height  = row1H + 'px';
+                        target.style.zIndex  = '10';
+                        target.style.opacity = '1';
+                        target.classList.add('is-big-card');
+                        target.classList.remove('is-small-card');
+
+                        /* 2 Small Cards in Top Right (smalls[0] and smalls[1]) */
+                        if (smalls[0]) {
+                            smalls[0].style.top     = '0px';
+                            smalls[0].style.left    = (bigW + gap) + 'px';
+                            smalls[0].style.width   = small12W + 'px';
+                            smalls[0].style.height  = small12H + 'px';
+                            smalls[0].style.zIndex  = '2';
+                            smalls[0].style.opacity = '0.88';
+                            smalls[0].classList.add('is-small-card');
+                            smalls[0].classList.remove('is-big-card');
+                        }
+
+                        if (smalls[1]) {
+                            smalls[1].style.top     = (small12H + gap) + 'px';
+                            smalls[1].style.left    = (bigW + gap) + 'px';
+                            smalls[1].style.width   = small12W + 'px';
+                            smalls[1].style.height  = small12H + 'px';
+                            smalls[1].style.zIndex  = '2';
+                            smalls[1].style.opacity = '0.88';
+                            smalls[1].classList.add('is-small-card');
+                            smalls[1].classList.remove('is-big-card');
+                        }
+
+                        /* 3 Small Cards in Bottom Row (smalls[2], smalls[3], smalls[4]) */
+                        var small345W = Math.floor((containerW - 2 * gap) / 3);
+                        var row2Top = row1H + gap;
+                        var bottomSmalls = smalls.slice(2);
+
+                        bottomSmalls.forEach(function (card, idx) {
+                            var cLeft = idx * (small345W + gap);
+                            var cW = (idx === bottomSmalls.length - 1) ? (containerW - cLeft) : small345W;
+                            card.style.top     = row2Top + 'px';
+                            card.style.left    = cLeft + 'px';
+                            card.style.width   = cW + 'px';
+                            card.style.height  = row2H + 'px';
+                            card.style.zIndex  = '2';
+                            card.style.opacity = '0.88';
+                            card.classList.add('is-small-card');
+                            card.classList.remove('is-big-card');
+                        });
+
+                        if (activeCard) { activeCard.classList.remove('is-big-card'); }
+                        activeCard = target;
+
+                        setTimeout(function () { expandLocked = false; }, 650);
+                    }
+
+                    /* Click handlers on each intro card */
                     introCards.forEach(function (card) {
-                        var r = card.getBoundingClientRect();
-                        card.style.position   = 'absolute';
-                        card.style.top        = (r.top  - gridRect.top)  + 'px';
-                        card.style.left       = (r.left - gridRect.left) + 'px';
-                        card.style.width      = r.width  + 'px';
-                        card.style.height     = r.height + 'px';
-                        card.style.margin     = '0';
-                        card.style.animation  = 'none';
-                        card.style.transition = 'none';
+                        card.addEventListener('click', function (e) {
+                            e.stopPropagation();
+                            activateCard(card);
+                        });
+
+                        card.addEventListener('mouseenter', function () {
+                            if (!dismissed && card !== activeCard) {
+                                card.style.opacity = '1';
+                            }
+                        });
+                        card.addEventListener('mouseleave', function () {
+                            if (!dismissed && card !== activeCard) {
+                                card.style.opacity = '0.72';
+                            }
+                        });
                     });
-                    introGrid.getBoundingClientRect(); /* force reflow */
+
+                    /* Auto-expand first card once fly-in animations finish (~1.6s) */
+                    setTimeout(function () {
+                        if (!dismissed && introCards[0]) { activateCard(introCards[0]); }
+                    }, 1600);
+
+                    /* Auto-dismiss after showing (7s for slow, clear intro) */
+                    var splashTimer = setTimeout(dismissSplash, 7000);
+
+                    /* Skip button */
+                    var skipBtn = document.getElementById('intro-skip-btn');
+                    if (skipBtn) {
+                        skipBtn.addEventListener('click', function (e) {
+                            e.stopPropagation();
+                            clearTimeout(splashTimer);
+                            dismissSplash();
+                        });
+                    }
                 }
-
-                /* Turn on smooth transitions */
-                var easing = 'cubic-bezier(0.16, 1, 0.3, 1)';
-                introCards.forEach(function (card) {
-                    card.style.transition = [
-                        'top 0.6s '     + easing,
-                        'left 0.6s '    + easing,
-                        'width 0.6s '   + easing,
-                        'height 0.6s '  + easing,
-                        'opacity 0.45s ease',
-                        'box-shadow 0.4s ease'
-                    ].join(', ');
-                });
-
-                /* Layout: big card left (76%), 5 small cards stacked right */
-                var gap    = 12;
-                var bigW   = Math.round(containerW * 0.76);
-                var bigH   = containerH;
-                var smallW = containerW - bigW - gap;
-                var smallCards = introCards.filter(function (c) { return c !== target; });
-                var smallH = Math.floor((containerH - (smallCards.length - 1) * gap) / smallCards.length);
-
-                /* Position big card */
-                target.style.top    = '0px';
-                target.style.left   = '0px';
-                target.style.width  = bigW + 'px';
-                target.style.height = bigH + 'px';
-                target.style.zIndex = '10';
-                target.style.opacity = '1';
-                target.classList.add('is-big-card');
-                target.classList.remove('is-small-card');
-
-                /* Position small cards in a vertical stack on the right */
-                smallCards.forEach(function (card, i) {
-                    card.style.top    = (i * (smallH + gap)) + 'px';
-                    card.style.left   = (bigW + gap) + 'px';
-                    card.style.width  = smallW + 'px';
-                    card.style.height = smallH + 'px';
-                    card.style.zIndex = '2';
-                    card.style.opacity = '0.72';
-                    card.classList.add('is-small-card');
-                    card.classList.remove('is-big-card');
-                });
-
-                if (activeCard) { activeCard.classList.remove('is-big-card'); }
-                activeCard = target;
-
-                setTimeout(function () { expandLocked = false; }, 650);
-            }
-
-            /* Click handlers on each intro card */
-            introCards.forEach(function (card) {
-                card.addEventListener('click', function (e) {
-                    e.stopPropagation();
-                    activateCard(card);
-                });
-
-                card.addEventListener('mouseenter', function () {
-                    if (!dismissed && card !== activeCard) {
-                        card.style.opacity = '1';
-                    }
-                });
-                card.addEventListener('mouseleave', function () {
-                    if (!dismissed && card !== activeCard) {
-                        card.style.opacity = '0.72';
-                    }
-                });
-            });
-
-            /* Auto-expand first card once fly-in animations finish (~1.2s) */
-            setTimeout(function () {
-                if (!dismissed && introCards[0]) { activateCard(introCards[0]); }
-            }, 1200);
-
-            /* Auto-dismiss after showing */
-            var splashTimer = setTimeout(dismissSplash, 4000);
-
-            /* Skip button */
-            var skipBtn = document.getElementById('intro-skip-btn');
-            if (skipBtn) {
-                skipBtn.addEventListener('click', function (e) {
-                    e.stopPropagation();
-                    clearTimeout(splashTimer);
-                    dismissSplash();
-                });
+            } catch (err) {
+                splash.style.display = 'none';
             }
         }
     </script>

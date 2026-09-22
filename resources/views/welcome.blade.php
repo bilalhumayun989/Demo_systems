@@ -5,35 +5,7 @@
 
 
 @section('content')
-    <!-- Opening Intro Showcase -->
-    <div id="intro-splash" class="intro-splash" aria-label="Welcome Showcase">
-        <div class="intro-splash-inner">
-            <div class="intro-brand">
-                <span class="intro-brand-dot"></span>
-                <span>BroshTech Software Platform</span>
-            </div>
-
-            <h2 class="intro-title">6 Connected Business Solutions. <em class="intro-highlight">One Ecosystem.</em></h2>
-
-            <div class="intro-stage-grid">
-                @foreach($products as $slug => $introProduct)
-                    <div class="intro-project-card" data-intro-card="{{ $loop->index }}" style="--i: {{ $loop->index }};">
-                        @include('software._preview', ['previewProduct' => $introProduct])
-                    </div>
-                @endforeach
-            </div>
-
-            <div class="intro-footer-wrap">
-                <div class="intro-progress-bar">
-                    <div class="intro-progress-fill"></div>
-                </div>
-                <button id="intro-skip-btn" type="button" class="intro-skip-button">
-                    <span>Explore Platform</span>
-                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                </button>
-            </div>
-        </div>
-    </div>
+    @include('software._intro_splash')
 
     <section class="hero">
         <div class="shell hero-intro">

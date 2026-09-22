@@ -4679,7 +4679,7 @@ body {
 	color: #333333;
 	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 	opacity: 0;
-	animation: introFadeIn 0.45s cubic-bezier(0.16, 1, 0.3, 1) 0.05s forwards;
+	animation: introFadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.05s forwards;
 }
 
 .intro-brand-dot {
@@ -4690,14 +4690,14 @@ body {
 }
 
 .intro-title {
-	margin: 14px 0 24px;
+	margin: 12px 0 14px;
 	font-family: Manrope, sans-serif;
 	font-size: clamp(22px, 3.5vw, 36px);
 	font-weight: 800;
 	letter-spacing: -0.03em;
 	color: #111111;
 	opacity: 0;
-	animation: introFadeIn 0.45s cubic-bezier(0.16, 1, 0.3, 1) 0.15s forwards;
+	animation: introFadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.15s forwards;
 }
 
 .intro-title em.intro-highlight {
@@ -4707,6 +4707,43 @@ body {
 	font-weight: 800;
 }
 
+/* Intro Demo Hint Pill & Tap Cursor */
+.intro-demo-hint-pill {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	padding: 7px 18px;
+	margin-bottom: 20px;
+	border: 1px solid #111111;
+	border-radius: 999px;
+	background: #111111;
+	color: #ffffff;
+	font-size: 12px;
+	font-weight: 600;
+	letter-spacing: 0.02em;
+	box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+	opacity: 0;
+	animation: introFadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.25s forwards, hintPillPulse 2.5s infinite 1.2s;
+}
+
+.hint-cursor-icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	color: #ffffff;
+	animation: cursorTapBounce 1.5s infinite ease-in-out;
+}
+
+@keyframes cursorTapBounce {
+	0%, 100% { transform: translate(0, 0) scale(1); }
+	50% { transform: translate(-2px, -3px) scale(1.15); }
+}
+
+@keyframes hintPillPulse {
+	0%, 100% { box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12); }
+	50% { box-shadow: 0 6px 20px rgba(0, 0, 0, 0.28); }
+}
+
 .intro-stage-grid {
 	display: grid;
 	grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -4714,26 +4751,71 @@ body {
 	width: 100%;
 }
 
-/* Each card flies in from a different direction based on its index */
+/* Each card flies in slowly from a different direction */
 .intro-project-card {
 	position: relative;
 	opacity: 0;
-	cursor: pointer;
+	cursor: pointer !important;
 	border-radius: 14px;
 	box-shadow: 0 14px 38px rgba(0, 0, 0, 0.09);
 	will-change: transform, opacity;
 	overflow: hidden;
 }
 
+.intro-project-card * {
+	cursor: pointer !important;
+}
+
+/* Floating Click Badge on Intro Cards */
+.intro-card-click-badge {
+	position: absolute;
+	bottom: 10px;
+	right: 10px;
+	display: inline-flex;
+	align-items: center;
+	gap: 5px;
+	padding: 5px 12px;
+	background: rgba(17, 17, 17, 0.88);
+	backdrop-filter: blur(6px);
+	color: #ffffff;
+	border-radius: 999px;
+	font-size: 11px;
+	font-weight: 700;
+	letter-spacing: 0.03em;
+	pointer-events: none;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+	transition: transform 0.25s ease, background 0.25s ease;
+}
+
+.intro-project-card:hover .intro-card-click-badge {
+	background: #111111;
+	transform: scale(1.05);
+}
+
+.intro-card-action {
+	font-size: 12px;
+	font-weight: 700;
+	color: #111111;
+	background: #f0f0ed;
+	padding: 4px 10px;
+	border-radius: 6px;
+	transition: all 0.2s ease;
+}
+
+.intro-project-card:hover .intro-card-action {
+	background: #111111;
+	color: #ffffff;
+}
+
 /* Big/small states when a card is expanded */
 .intro-project-card.is-big-card {
 	box-shadow: 0 32px 72px rgba(0, 0, 0, 0.18) !important;
-	cursor: default;
+	cursor: pointer !important;
 }
 
 .intro-project-card.is-small-card {
 	opacity: 0.72 !important;
-	cursor: pointer;
+	cursor: pointer !important;
 }
 
 .intro-project-card.is-small-card:hover {
@@ -4746,35 +4828,30 @@ body {
 	transform: none !important;
 }
 
-/* Card 0: top-left */
+/* Card entrance animations (Slow 0.85s grace duration) */
 .intro-project-card[data-intro-card="0"] {
 	transform: translate(-80px, -60px) scale(0.88);
-	animation: introCardFromTopLeft 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.10s forwards;
+	animation: introCardFromTopLeft 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.10s forwards;
 }
-/* Card 1: straight down from top */
 .intro-project-card[data-intro-card="1"] {
 	transform: translate(0, -80px) scale(0.88);
-	animation: introCardFromTop 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.18s forwards;
+	animation: introCardFromTop 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.22s forwards;
 }
-/* Card 2: top-right */
 .intro-project-card[data-intro-card="2"] {
 	transform: translate(80px, -60px) scale(0.88);
-	animation: introCardFromTopRight 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.26s forwards;
+	animation: introCardFromTopRight 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.34s forwards;
 }
-/* Card 3: bottom-left */
 .intro-project-card[data-intro-card="3"] {
 	transform: translate(-80px, 60px) scale(0.88);
-	animation: introCardFromBottomLeft 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.34s forwards;
+	animation: introCardFromBottomLeft 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.46s forwards;
 }
-/* Card 4: straight up from bottom */
 .intro-project-card[data-intro-card="4"] {
 	transform: translate(0, 80px) scale(0.88);
-	animation: introCardFromBottom 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.42s forwards;
+	animation: introCardFromBottom 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.58s forwards;
 }
-/* Card 5: bottom-right */
 .intro-project-card[data-intro-card="5"] {
 	transform: translate(80px, 60px) scale(0.88);
-	animation: introCardFromBottomRight 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.50s forwards;
+	animation: introCardFromBottomRight 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.70s forwards;
 }
 
 .intro-footer-wrap {
@@ -4784,7 +4861,7 @@ body {
 	gap: 12px;
 	margin-top: 24px;
 	opacity: 0;
-	animation: introFadeIn 0.45s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards;
+	animation: introFadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.8s forwards;
 }
 
 .intro-progress-bar {
@@ -4800,7 +4877,7 @@ body {
 	height: 100%;
 	background: #111111;
 	border-radius: 999px;
-	animation: introProgressFill 2.6s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
+	animation: introProgressFill 5.5s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
 }
 
 .intro-skip-button {
