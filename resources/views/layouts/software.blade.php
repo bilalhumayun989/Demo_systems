@@ -611,6 +611,18 @@
                         /* First call: snapshot current positions, switch to absolute layout */
                         if (!absLayout) {
                             absLayout = true;
+
+                            /* Stop entrance animations first */
+                            introCards.forEach(function (card) {
+                                card.style.animation = 'none';
+                                card.style.opacity   = '1';
+                                card.style.transform = 'none';
+                            });
+
+                            var freshGridRect = introGrid.getBoundingClientRect();
+                            containerW = freshGridRect.width;
+                            containerH = Math.max(freshGridRect.height, 520);
+
                             introGrid.style.position = 'relative';
                             introGrid.style.height   = containerH + 'px';
                             introGrid.classList.add('has-abs-layout');
@@ -618,12 +630,11 @@
                             introCards.forEach(function (card) {
                                 var r = card.getBoundingClientRect();
                                 card.style.position   = 'absolute';
-                                card.style.top        = (r.top  - gridRect.top)  + 'px';
-                                card.style.left       = (r.left - gridRect.left) + 'px';
+                                card.style.top        = (r.top  - freshGridRect.top)  + 'px';
+                                card.style.left       = (r.left - freshGridRect.left) + 'px';
                                 card.style.width      = r.width  + 'px';
                                 card.style.height     = r.height + 'px';
                                 card.style.margin     = '0';
-                                card.style.animation  = 'none';
                                 card.style.transition = 'none';
                             });
                             introGrid.getBoundingClientRect(); /* force reflow */
@@ -771,7 +782,7 @@
                         /* Step 1 (t = 800ms): Show cursor near top main headline */
                         tourTimers.push(setTimeout(function () {
                             if (mainTitle && tourActive) {
-                                moveCursorTo(mainTitle, 'Click any card -> becomes BIG!', false);
+                                moveCursorTo(mainTitle, 'Click card to expand BIG', false);
                             }
                         }, 800));
 
@@ -781,7 +792,7 @@
                             moveCursorTo(introCards[0], 'Clicking Card 1...', true, function () {
                                 if (!tourActive || dismissed) { return; }
                                 activateCard(introCards[0]);
-                                if (tourBadge) { tourBadge.textContent = 'Card 1 expanded BIG! ✨'; }
+                                if (tourBadge) { tourBadge.textContent = 'Card 1 Expanded'; }
                             });
                         }, 2400));
 
@@ -791,7 +802,7 @@
                             moveCursorTo(introCards[1], 'Switching demo...', true, function () {
                                 if (!tourActive || dismissed) { return; }
                                 activateCard(introCards[1]);
-                                if (tourBadge) { tourBadge.textContent = 'Card 2 expanded BIG! ✨'; }
+                                if (tourBadge) { tourBadge.textContent = 'Card 2 Expanded'; }
                             });
                         }, 6000));
 
@@ -800,21 +811,19 @@
                             if (!tourActive) { return; }
                             var skipBtn = splash.querySelector('#intro-skip-btn');
                             if (skipBtn) {
-                                moveCursorTo(skipBtn, 'Explore platform', false);
+                                moveCursorTo(skipBtn, 'Explore Platform', false);
                             }
                         }, 9400));
                     }
 
-                    /* Click handlers on each intro card (User interaction cancels tour immediately) */
+                    /* Click handlers on each intro card (User mouse movements keep tour running seamlessly) */
                     introCards.forEach(function (card) {
                         card.addEventListener('click', function (e) {
                             e.stopPropagation();
-                            cancelTour();
                             activateCard(card);
                         });
 
                         card.addEventListener('mouseenter', function () {
-                            cancelTour();
                             if (!dismissed && card !== activeCard) {
                                 card.style.opacity = '1';
                             }

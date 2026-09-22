@@ -6,7 +6,7 @@
             <span>BroshTech Software Platform</span>
         </div>
 
-        <h1 class="intro-title">Interactive Business Software Demos <em class="intro-highlight">Built to Accelerate Growth.</em></h1>
+        <h1 class="intro-title">How to Take Live Demo: <em class="intro-highlight">Click Any Software Card Below to See Demo</em></h1>
 
         <!-- Real-Time JS Guided Demo Cursor -->
         <div id="intro-tour-cursor" class="intro-tour-cursor" aria-hidden="true">
@@ -21,7 +21,7 @@
             @foreach($products as $slug => $introProduct)
                 <div class="intro-project-card" data-intro-card="{{ $loop->index }}" style="--i: {{ $loop->index }};">
                     <div class="project-preview">
-                        <div class="project-preview-viewport static-preview-viewport" style="position: relative; overflow: hidden; aspect-ratio: 16/10; background: #f2f2ef;">
+                        <div class="project-preview-viewport static-preview-viewport" style="position: relative; overflow: hidden; aspect-ratio: 16/9; background: #f2f2ef;">
                             <img src="{{ asset('images/Screenshot_' . ($loop->index + 1) . '.png') }}" alt="{{ $introProduct['name'] }} Real Preview" style="width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block;" />
                             <div class="intro-card-click-badge">
                                 <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M13.64 21.97a1 1 0 0 1-.94-.66l-2.48-6.44-4.52 3.16a1 1 0 0 1-1.57-.83V3.4a1 1 0 0 1 1.63-.78l13 10.5a1 1 0 0 1-.57 1.76l-5.3.38 2.5 6.27a1 1 0 0 1-.55 1.3l-1.12.44a.9.9 0 0 1-.57.7Z"/></svg>

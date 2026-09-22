@@ -4631,7 +4631,7 @@ body {
 	background: #ededeb;
 	color: #111111;
 	display: flex;
-	align-items: center;
+	align-items: flex-start;
 	justify-content: center;
 	overflow-y: auto;
 	overflow-x: hidden;
@@ -4659,7 +4659,7 @@ body {
 	max-width: 1200px;
 	width: min(100% - 32px, 1200px);
 	margin: 0 auto;
-	padding: 30px 0;
+	padding: 24px 0 40px;
 	position: relative;
 	z-index: 2;
 }
@@ -4690,9 +4690,9 @@ body {
 }
 
 .intro-title {
-	margin: 12px 0 14px;
+	margin: 10px 0 16px;
 	font-family: Manrope, sans-serif;
-	font-size: clamp(22px, 3.5vw, 36px);
+	font-size: clamp(20px, 2.8vw, 30px);
 	font-weight: 800;
 	letter-spacing: -0.03em;
 	color: #111111;
@@ -4881,10 +4881,28 @@ body {
 	color: #ffffff;
 }
 
+.intro-project-card .project-preview {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	width: 100%;
+}
+
+.intro-project-card .project-preview-viewport {
+	flex: 1 1 auto;
+	height: 100%;
+	width: 100%;
+}
+
+.intro-stage-grid.has-abs-layout .intro-project-card .project-preview-viewport {
+	aspect-ratio: auto !important;
+}
+
 /* Big/small states when a card is expanded */
 .intro-project-card.is-big-card {
 	box-shadow: 0 32px 72px rgba(0, 0, 0, 0.18) !important;
 	cursor: pointer !important;
+	z-index: 10 !important;
 }
 
 .intro-project-card.is-small-card {
