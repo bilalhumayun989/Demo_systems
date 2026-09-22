@@ -164,15 +164,10 @@
             });
 
             var projectCards = Array.from(document.querySelectorAll('.project-preview-grid .project-preview'));
-            projectCards.forEach(function (card, index) {
-                card.classList.add('motion-item', 'motion-3d-card');
-                card.style.setProperty('--reveal-delay', String(index * 110) + 'ms');
-            });
-
-            var allObserved = Array.from(motionItems).concat(projectCards);
+            var allObserved = Array.from(motionItems);
             var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-            if (!('IntersectionObserver' in window) || prefersReducedMotion) {
+            if (!('IntersectionObserver' in window) || prefer sReducedMotion) {
                 allObserved.forEach(function (item) {
                     item.classList.add('is-visible');
                 });
@@ -710,6 +705,85 @@
                         setTimeout(function () { expandLocked = false; }, 650);
                     }
 
+                    /* ── Real-Time JS Guided Demo Cursor Tour ── */
+                    var tourCursor = splash.querySelector('#intro-tour-cursor');
+                    var tourBadge  = tourCursor ? tourCursor.querySelector('.tour-guidance-badge') : null;
+                    var tourRipple = tourCursor ? tourCursor.querySelector('.tour-tap-ripple') : null;
+                    var tourTimers = [];
+
+                    function moveCursorTo(targetElem, textLabel, tapClick, onComplete) {
+                        if (!tourCursor || !targetElem) { return; }
+                        var splashInner = splash.querySelector('.intro-splash-inner');
+                        var innerRect   = splashInner.getBoundingClientRect();
+                        var elemRect    = targetElem.getBoundingClientRect();
+
+                        var destX = (elemRect.left - innerRect.left) + (elemRect.width / 2);
+                        var destY = (elemRect.top - innerRect.top) + (elemRect.height / 2);
+
+                        tourCursor.style.transform = 'translate(' + Math.round(destX) + 'px, ' + Math.round(destY) + 'px)';
+                        tourCursor.style.opacity   = '1';
+
+                        if (textLabel && tourBadge) {
+                            tourBadge.textContent = textLabel;
+                        }
+
+                        if (tapClick) {
+                            var t1 = setTimeout(function () {
+                                tourCursor.classList.add('is-clicking');
+                                if (tourRipple) {
+                                    tourRipple.classList.remove('is-animating');
+                                    void tourRipple.offsetWidth; /* reflow */
+                                    tourRipple.classList.add('is-animating');
+                                }
+                            }, 1100);
+
+                            var t2 = setTimeout(function () {
+                                tourCursor.classList.remove('is-clicking');
+                                if (typeof onComplete === 'function') { onComplete(); }
+                            }, 1450);
+
+                            tourTimers.push(t1, t2);
+                        }
+                    }
+
+                    /* Run tour sequence */
+                    if (tourCursor && introCards.length >= 2 && window.innerWidth > 600) {
+                        var mainTitle = splash.querySelector('.intro-title');
+
+                        /* Step 1 (t = 800ms): Show cursor near top headline */
+                        tourTimers.push(setTimeout(function () {
+                            if (mainTitle) {
+                                moveCursorTo(mainTitle, 'Click card to expand BIG', false);
+                            }
+                        }, 800));
+
+                        /* Step 2 (t = 2600ms): Glide to Card 0 & tap -> Card 0 morphs BIG! */
+                        tourTimers.push(setTimeout(function () {
+                            moveCursorTo(introCards[0], 'Clicking Card 1...', true, function () {
+                                if (dismissed) { return; }
+                                activateCard(introCards[0]);
+                                if (tourBadge) { tourBadge.textContent = 'Card 1 Expanded'; }
+                            });
+                        }, 2600));
+
+                        /* Step 3 (t = 6500ms): Glide to Card 1 & tap -> Card 1 morphs BIG! */
+                        tourTimers.push(setTimeout(function () {
+                            moveCursorTo(introCards[1], 'Switching demo...', true, function () {
+                                if (dismissed) { return; }
+                                activateCard(introCards[1]);
+                                if (tourBadge) { tourBadge.textContent = 'Card 2 Expanded'; }
+                            });
+                        }, 6500));
+
+                        /* Step 4 (t = 10500ms): Glide to skip button & dissolve */
+                        tourTimers.push(setTimeout(function () {
+                            var skipBtn = splash.querySelector('#intro-skip-btn');
+                            if (skipBtn) {
+                                moveCursorTo(skipBtn, 'Explore Platform', false);
+                            }
+                        }, 10500));
+                    }
+
                     /* Click handlers on each intro card */
                     introCards.forEach(function (card) {
                         card.addEventListener('click', function (e) {
@@ -729,13 +803,8 @@
                         });
                     });
 
-                    /* Auto-expand first card once fly-in animations finish (~1.2s) */
-                    setTimeout(function () {
-                        if (!dismissed && introCards[0]) { activateCard(introCards[0]); }
-                    }, 1200);
-
-                    /* Auto-dismiss after showing */
-                    var splashTimer = setTimeout(dismissSplash, 4000);
+                    /* Auto-dismiss after full slow showcase (12.5s) */
+                    var splashTimer = setTimeout(dismissSplash, 12500);
 
                     /* Skip button */
                     var skipBtn = document.getElementById('intro-skip-btn');

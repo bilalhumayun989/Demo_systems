@@ -4334,17 +4334,14 @@ body {
 }
 
 .motion-3d-card {
-	opacity: 0;
-	transform: perspective(1000px) rotateX(14deg) rotateY(-5deg) translateY(45px) scale(.93);
-	filter: blur(6px);
-	transition: opacity .9s cubic-bezier(.16, 1, .3, 1), transform .9s cubic-bezier(.16, 1, .3, 1), filter .9s cubic-bezier(.16, 1, .3, 1);
-	transition-delay: var(--reveal-delay, 0ms);
-	will-change: opacity, transform, filter
+	opacity: 1;
+	transform: none;
+	filter: none
 }
 
 .motion-3d-card.is-visible {
 	opacity: 1;
-	transform: perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0deg) scale(1);
+	transform: none;
 	filter: none
 }
 
@@ -4623,7 +4620,7 @@ body {
 	outline-offset: 4px
 }
 
-/* Intro Showcase Screen & Grid (Web Black & Gray Theme) */
+/* Intro Showcase Screen & Grid */
 .intro-splash {
 	position: fixed;
 	inset: 0;
@@ -4631,10 +4628,9 @@ body {
 	background: #ededeb;
 	color: #111111;
 	display: flex;
-	align-items: center;
+	align-items: flex-start;
 	justify-content: center;
-	overflow-y: auto;
-	overflow-x: hidden;
+	overflow: hidden;
 	transition: opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1);
 	will-change: opacity;
 }
@@ -4651,17 +4647,22 @@ body {
 	transition: opacity 0.25s ease;
 }
 
+/* Inner container fills full viewport height, stacks brand → title → grid → footer */
 .intro-splash-inner {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	text-align: center;
-	max-width: 1200px;
-	width: min(100% - 32px, 1200px);
+	max-width: 1280px;
+	width: min(100% - 32px, 1280px);
 	margin: 0 auto;
-	padding: 30px 0;
+	padding: 22px 0 18px;
 	position: relative;
 	z-index: 2;
+	height: 100dvh;
+	height: 100vh; /* fallback */
+	min-height: 0;
+	justify-content: flex-start;
 }
 
 .intro-brand {
@@ -4707,14 +4708,85 @@ body {
 	font-weight: 800;
 }
 
+/* Real-Time Guided Demo Tour Cursor */
+.intro-tour-cursor {
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 9999;
+	pointer-events: none;
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	opacity: 0;
+	will-change: transform, opacity;
+	transition: transform 1.2s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.4s ease;
+}
+
+.intro-tour-cursor.is-clicking .tour-pointer-svg {
+	transform: scale(0.82) rotate(-8deg);
+	transition: transform 0.15s ease-in-out;
+}
+
+.tour-pointer-svg {
+	filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.35));
+	transition: transform 0.25s ease;
+}
+
+.tour-tap-ripple {
+	position: absolute;
+	top: -4px;
+	left: -4px;
+	width: 32px;
+	height: 32px;
+	border-radius: 50%;
+	border: 2px solid rgba(17, 17, 17, 0.85);
+	background: rgba(17, 17, 17, 0.15);
+	opacity: 0;
+	transform: scale(0.2);
+	pointer-events: none;
+}
+
+.tour-tap-ripple.is-animating {
+	animation: tourRippleExpand 0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes tourRippleExpand {
+	0% {
+		opacity: 0.95;
+		transform: scale(0.2);
+	}
+	100% {
+		opacity: 0;
+		transform: scale(2.8);
+	}
+}
+
+.tour-guidance-badge {
+	background: #111111;
+	color: #ffffff;
+	font-family: DM Sans, sans-serif;
+	font-size: 11px;
+	font-weight: 700;
+	padding: 5px 13px;
+	border-radius: 999px;
+	box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+	white-space: nowrap;
+	letter-spacing: 0.02em;
+}
+
+/* Grid fills all remaining height between title and footer */
 .intro-stage-grid {
 	display: grid;
 	grid-template-columns: repeat(3, minmax(0, 1fr));
-	gap: 20px;
+	grid-template-rows: repeat(2, minmax(0, 1fr));
+	gap: 16px;
 	width: 100%;
+	flex: 1;
+	min-height: 0;
 }
 
-/* Each card flies in from a different direction based on its index */
+/* Each card fills its grid cell */
 .intro-project-card {
 	position: relative;
 	opacity: 0;
@@ -4723,6 +4795,76 @@ body {
 	box-shadow: 0 14px 38px rgba(0, 0, 0, 0.09);
 	will-change: transform, opacity;
 	overflow: hidden;
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+}
+
+.intro-project-card .project-preview {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	flex: 1;
+}
+
+/* Override inline aspect-ratio so card viewport fills remaining height */
+.intro-project-card .project-preview-viewport,
+.intro-project-card .static-preview-viewport {
+	aspect-ratio: unset !important;
+	flex: 1 !important;
+	min-height: 0 !important;
+	width: 100% !important;
+}
+
+/* Click badge overlay on card image */
+.intro-card-click-badge {
+	position: absolute;
+	bottom: 8px;
+	right: 8px;
+	display: inline-flex;
+	align-items: center;
+	gap: 5px;
+	padding: 4px 10px;
+	border-radius: 999px;
+	background: rgba(17, 17, 17, 0.75);
+	backdrop-filter: blur(6px);
+	color: #ffffff;
+	font-size: 10px;
+	font-weight: 700;
+	pointer-events: none;
+	opacity: 0;
+	transition: opacity 0.25s ease;
+	letter-spacing: 0.02em;
+}
+
+.intro-project-card:hover .intro-card-click-badge {
+	opacity: 1;
+}
+
+/* Card footer: name + action label */
+.intro-project-card .project-preview-footer {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 9px 13px;
+	background: #ffffff;
+	flex-shrink: 0;
+	min-height: 0;
+}
+
+.intro-project-card .project-preview-footer strong {
+	font-family: Manrope, sans-serif;
+	font-size: 13px;
+	font-weight: 700;
+	color: #111111;
+	letter-spacing: -0.02em;
+}
+
+.intro-card-action {
+	font-size: 11px;
+	font-weight: 600;
+	color: #6b7280;
+	white-space: nowrap;
 }
 
 /* Big/small states when a card is expanded */
@@ -4805,7 +4947,7 @@ body {
 	height: 100%;
 	background: #111111;
 	border-radius: 999px;
-	animation: introProgressFill 2.6s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
+	animation: introProgressFill 11.0s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
 }
 
 .intro-skip-button {
@@ -4941,13 +5083,124 @@ body {
 @media (max-width: 900px) {
 	.intro-stage-grid {
 		grid-template-columns: repeat(2, minmax(0, 1fr));
-		gap: 14px;
+		grid-template-rows: repeat(3, minmax(0, 1fr));
+		gap: 12px;
 	}
 }
 
 @media (max-width: 600px) {
 	.intro-stage-grid {
 		grid-template-columns: minmax(0, 1fr);
+		grid-template-rows: repeat(6, minmax(0, 1fr));
+		gap: 10px;
+	}
+}
+
+/* ─── Laptop / small-height screens: compact padding & fonts ─── */
+
+/* Most laptops (viewport height < 900px) */
+@media (max-height: 900px) {
+	.intro-splash-inner {
+		padding: 14px 0 10px;
+	}
+
+	.intro-brand {
+		font-size: 10px;
+		padding: 5px 13px;
+	}
+
+	.intro-title {
+		font-size: clamp(14px, 2vw, 22px);
+		margin: 8px 0 12px;
+	}
+
+	.intro-stage-grid {
 		gap: 12px;
+	}
+
+	.intro-footer-wrap {
+		margin-top: 10px;
+		gap: 7px;
+	}
+
+	.intro-progress-bar {
+		width: 150px;
+		height: 3px;
+	}
+
+	.intro-skip-button {
+		padding: 7px 18px;
+		font-size: 12px;
+	}
+}
+
+/* Compact laptops (viewport height < 800px) */
+@media (max-height: 800px) {
+	.intro-splash-inner {
+		padding: 10px 0 8px;
+	}
+
+	.intro-brand {
+		font-size: 9px;
+		padding: 4px 11px;
+	}
+
+	.intro-title {
+		font-size: clamp(13px, 1.8vw, 18px);
+		margin: 6px 0 10px;
+	}
+
+	.intro-stage-grid {
+		gap: 10px;
+	}
+
+	.intro-footer-wrap {
+		margin-top: 8px;
+		gap: 5px;
+	}
+
+	.intro-progress-bar {
+		width: 130px;
+		height: 3px;
+	}
+
+	.intro-skip-button {
+		padding: 6px 14px;
+		font-size: 11px;
+	}
+}
+
+/* Very compact screens (viewport height < 700px) */
+@media (max-height: 700px) {
+	.intro-splash-inner {
+		padding: 8px 0 6px;
+	}
+
+	.intro-brand {
+		display: none;
+	}
+
+	.intro-title {
+		font-size: clamp(12px, 1.6vw, 15px);
+		margin: 0 0 8px;
+	}
+
+	.intro-stage-grid {
+		gap: 8px;
+	}
+
+	.intro-footer-wrap {
+		margin-top: 6px;
+		gap: 4px;
+	}
+
+	.intro-progress-bar {
+		width: 110px;
+		height: 3px;
+	}
+
+	.intro-skip-button {
+		padding: 5px 12px;
+		font-size: 10px;
 	}
 }

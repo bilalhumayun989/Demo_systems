@@ -23,13 +23,8 @@ class SoftwareCatalogTest extends TestCase
             ->assertSee('https://pos.broshtech.com/demo', false)
             ->assertDontSee('images/software_dashboard.jpeg', false);
 
-        foreach (['Vendify', 'CX Couriers', 'RMS', 'Padel POS'] as $name) {
+        foreach (['Cloud Khata', 'Vendify', 'CX Couriers', 'DOMS', 'RMS', 'Padel POS'] as $name) {
             $response->assertSee('title="'.$name.' live project preview"', false);
-        }
-
-        foreach (['Cloud Khata', 'DOMS'] as $name) {
-            $response->assertSee('aria-label="'.$name.' project overview"', false)
-                ->assertDontSee('title="'.$name.' live project preview"', false);
         }
     }
 
@@ -42,13 +37,7 @@ class SoftwareCatalogTest extends TestCase
             ->assertDontSee('images/software_dashboard.jpeg', false)
             ->assertSee('Buy now');
 
-        if (in_array($slug, ['cloud-khata', 'doms'], true)) {
-            $response->assertSee('aria-label="'.$name.' project overview"', false)
-                ->assertSee('Launch demo in a new tab')
-                ->assertDontSee('<iframe', false);
-        } else {
-            $response->assertSee('title="'.$name.' live project preview"', false);
-        }
+        $response->assertSee('title="'.$name.' live project preview"', false);
     }
 
     public function test_vendify_detail_page_links_to_the_live_demo(): void
