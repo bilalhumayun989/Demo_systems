@@ -229,86 +229,89 @@
                         containerH = parseInt(heroGrid.style.height, 10);
                     }
 
-                    /* Smooth transitions */
-                    var ease = 'cubic-bezier(0.16, 1, 0.3, 1)';
-                    projectCards.forEach(function (card) {
-                        card.style.transition = [
-                            'top 0.62s '    + ease,
-                            'left 0.62s '   + ease,
-                            'width 0.62s '  + ease,
-                            'height 0.62s ' + ease,
-                            'opacity 0.45s ease',
-                            'box-shadow 0.4s ease',
-                            'border-color 0.3s ease'
-                        ].join(', ');
+                    /* Fast, fluid transitions — apply after one rAF so browser has a clean frame */
+                    var ease = 'cubic-bezier(0.2, 0.9, 0.2, 1)';
+                    var transitionValue = [
+                        'top 0.38s '    + ease,
+                        'left 0.38s '   + ease,
+                        'width 0.38s '  + ease,
+                        'height 0.38s ' + ease,
+                        'opacity 0.32s ease',
+                        'box-shadow 0.28s ease',
+                        'border-color 0.22s ease'
+                    ].join(', ');
+                    requestAnimationFrame(function () {
+                        projectCards.forEach(function (card) {
+                            card.style.transition = transitionValue;
+                        });
+
+                        /* Layout: Row 1 = 1 BIG (left) + 2 SMALL (stacked right); Row 2 = 3 SMALL (side-by-side) */
+                        var gap = 16;
+                        var row1H = Math.round(containerH * 0.65);
+                        var row2H = containerH - row1H - gap;
+
+                        var bigW = Math.round(containerW * 0.67);
+                        var small12W = containerW - bigW - gap;
+                        var small12H = Math.floor((row1H - gap) / 2);
+
+                        var smalls = projectCards.filter(function (c) { return c !== target; });
+
+                        /* 1 BIG Card (Top Left) */
+                        target.style.top     = '0px';
+                        target.style.left    = '0px';
+                        target.style.width   = bigW + 'px';
+                        target.style.height  = row1H + 'px';
+                        target.style.zIndex  = '20';
+                        target.style.opacity = '1';
+                        target.classList.add('is-hero-big');
+                        target.classList.remove('is-hero-small');
+
+                        /* 2 Small Cards in Top Right (smalls[0] and smalls[1]) */
+                        if (smalls[0]) {
+                            smalls[0].style.top     = '0px';
+                            smalls[0].style.left    = (bigW + gap) + 'px';
+                            smalls[0].style.width   = small12W + 'px';
+                            smalls[0].style.height  = small12H + 'px';
+                            smalls[0].style.zIndex  = '2';
+                            smalls[0].style.opacity = '0.88';
+                            smalls[0].classList.add('is-hero-small');
+                            smalls[0].classList.remove('is-hero-big');
+                        }
+
+                        if (smalls[1]) {
+                            smalls[1].style.top     = (small12H + gap) + 'px';
+                            smalls[1].style.left    = (bigW + gap) + 'px';
+                            smalls[1].style.width   = small12W + 'px';
+                            smalls[1].style.height  = small12H + 'px';
+                            smalls[1].style.zIndex  = '2';
+                            smalls[1].style.opacity = '0.88';
+                            smalls[1].classList.add('is-hero-small');
+                            smalls[1].classList.remove('is-hero-big');
+                        }
+
+                        /* 3 Small Cards in Bottom Row (smalls[2], smalls[3], smalls[4]) */
+                        var small345W = Math.floor((containerW - 2 * gap) / 3);
+                        var row2Top = row1H + gap;
+                        var bottomSmalls = smalls.slice(2);
+
+                        bottomSmalls.forEach(function (card, idx) {
+                            var cLeft = idx * (small345W + gap);
+                            var cW = (idx === bottomSmalls.length - 1) ? (containerW - cLeft) : small345W;
+                            card.style.top     = row2Top + 'px';
+                            card.style.left    = cLeft + 'px';
+                            card.style.width   = cW + 'px';
+                            card.style.height  = row2H + 'px';
+                            card.style.zIndex  = '2';
+                            card.style.opacity = '0.88';
+                            card.classList.add('is-hero-small');
+                            card.classList.remove('is-hero-big');
+                        });
+
+                        if (heroActiveCard) { heroActiveCard.classList.remove('is-hero-big'); }
+                        heroActiveCard = target;
+
+                        setTimeout(function () { heroLocked = false; }, 400);
                     });
-
-                    /* Layout: Row 1 = 1 BIG (left) + 2 SMALL (stacked right); Row 2 = 3 SMALL (side-by-side) */
-                    var gap = 16;
-                    var row1H = Math.round(containerH * 0.65);
-                    var row2H = containerH - row1H - gap;
-
-                    var bigW = Math.round(containerW * 0.67);
-                    var small12W = containerW - bigW - gap;
-                    var small12H = Math.floor((row1H - gap) / 2);
-
-                    var smalls = projectCards.filter(function (c) { return c !== target; });
-
-                    /* 1 BIG Card (Top Left) */
-                    target.style.top     = '0px';
-                    target.style.left    = '0px';
-                    target.style.width   = bigW + 'px';
-                    target.style.height  = row1H + 'px';
-                    target.style.zIndex  = '20';
-                    target.style.opacity = '1';
-                    target.classList.add('is-hero-big');
-                    target.classList.remove('is-hero-small');
-
-                    /* 2 Small Cards in Top Right (smalls[0] and smalls[1]) */
-                    if (smalls[0]) {
-                        smalls[0].style.top     = '0px';
-                        smalls[0].style.left    = (bigW + gap) + 'px';
-                        smalls[0].style.width   = small12W + 'px';
-                        smalls[0].style.height  = small12H + 'px';
-                        smalls[0].style.zIndex  = '2';
-                        smalls[0].style.opacity = '0.88';
-                        smalls[0].classList.add('is-hero-small');
-                        smalls[0].classList.remove('is-hero-big');
-                    }
-
-                    if (smalls[1]) {
-                        smalls[1].style.top     = (small12H + gap) + 'px';
-                        smalls[1].style.left    = (bigW + gap) + 'px';
-                        smalls[1].style.width   = small12W + 'px';
-                        smalls[1].style.height  = small12H + 'px';
-                        smalls[1].style.zIndex  = '2';
-                        smalls[1].style.opacity = '0.88';
-                        smalls[1].classList.add('is-hero-small');
-                        smalls[1].classList.remove('is-hero-big');
-                    }
-
-                    /* 3 Small Cards in Bottom Row (smalls[2], smalls[3], smalls[4]) */
-                    var small345W = Math.floor((containerW - 2 * gap) / 3);
-                    var row2Top = row1H + gap;
-                    var bottomSmalls = smalls.slice(2);
-
-                    bottomSmalls.forEach(function (card, idx) {
-                        var cLeft = idx * (small345W + gap);
-                        var cW = (idx === bottomSmalls.length - 1) ? (containerW - cLeft) : small345W;
-                        card.style.top     = row2Top + 'px';
-                        card.style.left    = cLeft + 'px';
-                        card.style.width   = cW + 'px';
-                        card.style.height  = row2H + 'px';
-                        card.style.zIndex  = '2';
-                        card.style.opacity = '0.88';
-                        card.classList.add('is-hero-small');
-                        card.classList.remove('is-hero-big');
-                    });
-
-                    if (heroActiveCard) { heroActiveCard.classList.remove('is-hero-big'); }
-                    heroActiveCard = target;
-
-                    setTimeout(function () { heroLocked = false; }, 650);
                 }
 
                 function heroReset() {
@@ -384,7 +387,7 @@
                     });
                     card.addEventListener('mouseleave', function () {
                         if (heroAbsLayout && card !== heroActiveCard) {
-                            card.style.opacity = '0.72';
+                            card.style.opacity = '0.88';
                         }
                     });
                 });
@@ -495,8 +498,15 @@
             }
             var url = new URL(frame.dataset.src, window.location.href);
 
+            var rAFScheduled = false;
             function resizePreview() {
-                frame.style.transform = 'scale(' + viewport.clientWidth / 1280 + ')';
+                if (!rAFScheduled) {
+                    rAFScheduled = true;
+                    requestAnimationFrame(function () {
+                        frame.style.transform = 'scale(' + (viewport.clientWidth / 1280).toFixed(4) + ')';
+                        rAFScheduled = false;
+                    });
+                }
             }
 
             frame.addEventListener('load', function () {
