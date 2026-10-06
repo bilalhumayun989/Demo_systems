@@ -70,7 +70,7 @@ return [
             'soft_color' => '#ececea',
             'secondary_color' => '#d6d6d2',
             'accent_text' => '#ffffff',
-            'demo_url' => 'http://187.127.204.45/courier/demo',
+            'demo_url' => 'https://dispatchly.broshtech.com/demo',
             'embed_enabled' => true,
             'features' => [
                 ['title' => 'Fleet management', 'description' => 'Manage vans, vehicle status, fixed costs and driver assignments from one place.'],
@@ -98,7 +98,7 @@ return [
             'soft_color' => '#ececea',
             'secondary_color' => '#d6d6d2',
             'accent_text' => '#ffffff',
-            'demo_url' => 'http://187.127.204.45/doms-sytem/demo',
+            'demo_url' => 'https://kravio.broshtech.com/demo',
             'embed_enabled' => true,
             'features' => [
                 ['title' => 'Trip & delivery workflow', 'description' => 'Manage delivery trips from preparation and dispatch through delivery results, collections and final closure.'],
@@ -120,7 +120,7 @@ return [
             'soft_color' => '#ececea',
             'secondary_color' => '#d6d6d2',
             'accent_text' => '#ffffff',
-            'demo_url' => 'http://187.127.204.45/rms-system/demo',
+            'demo_url' => 'https://dineflow.broshtech.com/demo',
             'embed_enabled' => true,
             'features' => [
                 ['title' => 'Orders & payments', 'description' => 'Create and manage customer orders through a streamlined workflow while keeping payment and order history organized.'],
@@ -151,7 +151,7 @@ return [
             'soft_color' => '#ececea',
             'secondary_color' => '#d6d6d2',
             'accent_text' => '#ffffff',
-            'demo_url' => 'http://187.127.204.45/padel/demo',
+            'demo_url' => 'https://padel.broshtech.com/demo',
             'embed_enabled' => true,
             'features' => [
                 ['title' => 'Court bookings & schedule', 'description' => 'Manage court availability, create bookings, prevent scheduling conflicts and keep every session organized through one shared schedule.'],

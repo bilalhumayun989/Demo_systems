@@ -53,7 +53,7 @@ class SoftwareCatalogTest extends TestCase
             ->assertSee('RMS built for')
             ->assertSee('modern restaurants and food businesses.')
             ->assertSee('Orders &amp; payments', false)
-            ->assertSee('http://187.127.204.45/rms-system/demo', false)
+            ->assertSee('https://dineflow.broshtech.com/demo', false)
             ->assertSee('Open live demo');
     }
 
