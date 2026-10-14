@@ -3,6 +3,8 @@
 @php
     $interest = $product ? $product['name'] : 'BroshTech software solutions';
     $emailSubject = urlencode('I am interested in '.$interest);
+    $email = config('software.sales_email');
+    $gmailComposeUrl = 'https://mail.google.com/mail/?view=cm&fs=1&to='.urlencode($email).'&su='.$emailSubject;
     $whatsappMessage = urlencode('Hello BroshTech, I am interested in '.$interest.'. Please share pricing and setup details.');
     $whatsappNumber = preg_replace('/\D+/', '', config('software.sales_phone'));
 @endphp
@@ -25,15 +27,16 @@
             </div>
 
             <div class="contact-page-grid">
-                <a class="contact-page-card" href="mailto:{{ config('software.sales_email') }}?subject={{ $emailSubject }}">
+                <div class="contact-page-card contact-page-email-card">
                     <span class="contact-page-icon" aria-hidden="true">@</span>
                     <span class="contact-page-card-copy">
                         <small>Email</small>
-                        <strong>{{ config('software.sales_email') }}</strong>
-                        <span>Send us your requirements and we’ll reply with the right information.</span>
+                        <strong class="contact-page-email-address">{{ $email }}</strong>
+                        <span>Send us your requirements and we will reply with the right information.</span>
+                        <a class="contact-page-email-action" href="{{ $gmailComposeUrl }}" target="_blank" rel="noopener noreferrer">Open Gmail to write an email</a>
                     </span>
-                    <b aria-hidden="true">→</b>
-                </a>
+                    <button class="contact-page-copy-button" type="button" data-copy-email="{{ $email }}" aria-label="Copy email address">Copy</button>
+                </div>
 
                 <a class="contact-page-card" href="https://wa.me/{{ $whatsappNumber }}?text={{ $whatsappMessage }}" target="_blank" rel="noopener noreferrer">
                     <span class="contact-page-icon contact-page-wa" aria-hidden="true">WA</span>

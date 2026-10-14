@@ -67,7 +67,7 @@ class SoftwareCatalogTest extends TestCase
         $this->get('/contact?product=vendify')
             ->assertViewIs('software.contact')
             ->assertSee('Vendify')
-            ->assertSee('bill.humayun1@gmail.com')
+            ->assertSee('info@broshtech.com')
             ->assertSee('+92 3003662818')
             ->assertSee('https://wa.me/923003662818', false);
     }

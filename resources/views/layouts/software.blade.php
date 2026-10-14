@@ -110,6 +110,32 @@
     </footer>
 
     <script>
+        document.querySelectorAll('[data-copy-email]').forEach(function (button) {
+            button.addEventListener('click', async function () {
+                var email = button.dataset.copyEmail;
+
+                try {
+                    await navigator.clipboard.writeText(email);
+                } catch (error) {
+                    var emailAddress = document.querySelector('.contact-page-email-address');
+                    var selection = window.getSelection();
+                    var range = document.createRange();
+
+                    range.selectNodeContents(emailAddress);
+                    selection.removeAllRanges();
+                    selection.addRange(range);
+                    document.execCommand('copy');
+                    selection.removeAllRanges();
+                }
+
+                button.textContent = 'Copied';
+                window.setTimeout(function () {
+                    button.textContent = 'Copy';
+                }, 1800);
+            });
+        });
+    </script>
+    <script>
         (function () {
             var toggle = document.querySelector('.nav-toggle');
             var nav = document.getElementById('site-nav');

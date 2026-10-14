@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'sales_email' => env('SOFTWARE_SALES_EMAIL', 'bill.humayun1@gmail.com'),
+    'sales_email' => env('SOFTWARE_SALES_EMAIL', 'info@broshtech.com'),
     'sales_phone' => env('SOFTWARE_SALES_PHONE', '+92 3003662818'),
     'products' => [
         'cloud-khata' => [
